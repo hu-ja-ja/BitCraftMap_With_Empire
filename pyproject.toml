@@ -1,0 +1,10 @@
+[project]
+name = "BitCraftMap_With_Empire"
+version = "0.0.1"
+dependencies = [
+    "requests>=2.0",
+    "shapely>=2.0",
+]
+
+[tool.uv]
+package = false
