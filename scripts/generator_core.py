@@ -30,7 +30,7 @@ except Exception:
     HAS_SHAPELY = False
 
 BASE_URL = "https://bitjita.com"
-DEFAULT_USER_AGENT = "BitJita (Map_With_Empire)"
+DEFAULT_USER_AGENT = "Map_With_Empire (discord: hu_ja_ja_)"
 
 # Shared palette for deterministic and greedy coloring
 PALETTE = [
