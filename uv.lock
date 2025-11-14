@@ -3,7 +3,7 @@ revision = 3
 requires-python = ">=3.13"
 
 [[package]]
-name = ""
+name = "bitcraftmap-with-empire"
 version = "0.0.1"
 source = { virtual = "." }
 dependencies = [

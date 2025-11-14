@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """Core generator logic for BitJita -> GeoJSON.
 
-This module contains reusable classes and functions extracted from the original
-`generate_geojson.py` to make the code modular and easier to test.
+このモジュールは BitJita API から取得したデータを GeoJSON に変換する
+主要なロジック（API クライアント、レートリミッタ、座標変換、チャンクマップ構築、
+Shapely を使ったポリゴン結合や隣接グラフ、色付けなど）を含みます。
+
+`generate_geojson.py` はこのモジュールを薄くラップして CLI を提供します。
 """
 from __future__ import annotations
 
@@ -15,7 +18,7 @@ from typing import Any, Dict, List, Set, Tuple
 import requests
 
 try:
-    from shapely.geometry import Polygon as ShapelyPolygon, mapping as shapely_mapping
+    from shapely.geometry import mapping as shapely_mapping
     from shapely.ops import unary_union
     try:
         from shapely.strtree import STRtree
@@ -23,7 +26,6 @@ try:
         STRtree = None
     HAS_SHAPELY = True
 except Exception:
-    ShapelyPolygon = None
     shapely_mapping = None
     unary_union = None
     STRtree = None
@@ -44,6 +46,14 @@ PALETTE = [
 
 
 class RateLimiter:
+    """トークンバケット方式の簡易レートリミッタ。
+
+    rate_per_min: 分あたり許可するリクエスト数（最小値 1）
+    capacity: バケットの最大トークン数（None の場合はデフォルト）
+
+    acquire() を呼ぶとトークンが利用可能になるまでブロックします。
+    これにより外部 API へ過負荷をかけないようにします。
+    """
     def __init__(self, rate_per_min: int = 250, capacity: int | None = None):
         self.rate_per_min = max(1, int(rate_per_min))
         self.rate_per_sec = self.rate_per_min / 60.0
@@ -68,6 +78,12 @@ class RateLimiter:
 
 
 def _get_with_retries(session: requests.Session, url: str, limiter: RateLimiter, headers: dict, timeout: float = 10.0, max_retries: int = 4):
+    """HTTP GET を行い、リトライ/バックオフとレート制御を行うヘルパー。
+
+    - limiter.acquire() で事前にレート制御を行う
+    - 例外/5xx/429 レスポンス時は指数バックオフでリトライする
+    - 成功時は Response を返し、最終的に失敗した場合は例外を発生させる
+    """
     backoff_base = 0.5
     for attempt in range(1, max_retries + 1):
         limiter.acquire()
@@ -109,6 +125,7 @@ class BitJitaClient:
         self.user_agent = user_agent
 
     def fetch_empires(self) -> List[dict]:
+        # /api/empires からエンパイア一覧を取得し、JSON の 'empires' を返す
         url = f"{BASE_URL}/api/empires"
         try:
             r = _get_with_retries(self.session, url, self.limiter, headers={"User-Agent": self.user_agent})
@@ -116,9 +133,11 @@ class BitJitaClient:
                 return []
             return r.json().get("empires", [])
         except Exception:
+            # 呼び出しに失敗した場合は空リストを返して呼び出し側で扱う
             return []
 
     def fetch_towers(self, empire_id: int) -> List[dict]:
+        # 指定エンパイアの塔情報を取得する（通常はリストを返す）
         url = f"{BASE_URL}/api/empires/{empire_id}/towers"
         try:
             r = _get_with_retries(self.session, url, self.limiter, headers={"User-Agent": self.user_agent})
@@ -130,6 +149,8 @@ class BitJitaClient:
 
 
 def small_to_chunk(x: int, y: int) -> Tuple[int, int]:
+    # SmallHexTile (ゲーム内部座標) をチャンク座標に変換する
+    # 仕様：チャンク = floor(座標 / 96)
     return (x // 96, y // 96)
 
 
@@ -141,19 +162,45 @@ def chunk_bounds(cx: int, cy: int) -> List[Tuple[int, int]]:
     return [(x0, y0), (x1, y0), (x1, y1), (x0, y1), (x0, y0)]
 
 
+def _coords_to_feature_polygon(coords: List[Tuple[int, int]]) -> List[List[List[int]]]:
+    """ヘルパー: chunk_bounds の出力を GeoJSON の Polygon 座標形式に変換する。
+
+    返り値の形: [[[x0,y0],[x1,y0],...]] のような 1 要素のリスト（外殻のみ）。
+    この関数は内部利用のみで、明示的に GeoJSON 形式に整形する役割を持つ。
+    """
+    return [[list(p) for p in coords]]
+
+
 def build_features_from_chunkmap(chunkmap: Dict[Tuple[int, int], Set[Tuple[int, str]]]) -> List[dict]:
+    """chunkmap を受け取り、チャンク単位の GeoJSON Feature リストを返す。
+
+    入力:
+      chunkmap: {(cx,cy): set((eid, name), ...), ...}
+
+    出力:
+      GeoJSON Feature のリスト。各 Feature はチャンクの四角形ポリゴンで、
+      所有者が複数なら 'Contested' 表示、単一なら PALETTE から色を選ぶ。
+
+    注意点:
+      - chunkmap のキーは任意の整数チャンク座標を許す（負値も理論上は可能）
+      - 所有者セットが空のチャンクは無視する
+    """
     features: List[dict] = []
     for (cx, cy), owners in chunkmap.items():
         coords = chunk_bounds(cx, cy)
-        coords_list = [[list(p) for p in coords]]
+        coords_list = _coords_to_feature_polygon(coords)
         if len(owners) == 0:
+            # 所有者なしはスキップ
             continue
         if len(owners) > 1:
-            owner_names = ", ".join(sorted(n for (_id, n) in owners))
+            # 複数オーナー -> 競合表示
+            owner_names = ", ".join(sorted(n for (_, n) in owners))
             props = {"popupText": f"Contested: {owner_names}", "color": "#888888", "fillColor": "#888888", "fillOpacity": 0.2}
         else:
+            # 単一オーナー -> PALETTE から色を選ぶ（deterministic）
             eid, name = next(iter(owners))
-            props = {"popupText": name, "color": PALETTE[eid % len(PALETTE)], "fillColor": PALETTE[eid % len(PALETTE)], "fillOpacity": 0.4}
+            color = PALETTE[eid % len(PALETTE)]
+            props = {"popupText": name, "color": color, "fillColor": color, "fillOpacity": 0.4}
         feature = {"type": "Feature", "properties": props, "geometry": {"type": "Polygon", "coordinates": coords_list}}
         features.append(feature)
     return features
@@ -162,7 +209,28 @@ def build_features_from_chunkmap(chunkmap: Dict[Tuple[int, int], Set[Tuple[int, 
 def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: BitJitaClient, args, throttle: float, log) -> Tuple[Dict[Tuple[int, int], Set[Tuple[int, str]]], List[dict]]:
     from concurrent.futures import ThreadPoolExecutor, as_completed
 
+    """指定されたエンパイア一覧を処理してチャンクマップを構築する。
+
+    入力:
+      emps_to_process: [(eid, name), ...] — 処理対象のエンパイア一覧
+      client: BitJitaClient — API 呼び出し用クライアント
+      args: argparse.Namespace — CLI 引数（workers, max_towers_per_empire などを参照）
+      throttle: float — 各エンパイア処理後に待機する秒数
+      log: callable — ログ出力関数
+
+    出力:
+      (chunkmap, siege_points)
+      - chunkmap: {(cx,cy): set((eid,name), ...)} — チャンクごとの所有者集合
+      - siege_points: 将来的な利用を想定した位置情報リスト（現状は未使用）
+
+    挙動:
+      - 並列に各エンパイアの塔を取得し、各塔が占有する 5x5 チャンク範囲を chunkmap に追加する
+      - towers の 'active' が False のものは無視する
+      - locationX / locationZ が無い、あるいは範囲外 (<=0 または >23040) は無視する
+      - max_features / max_towers_per_empire が設定されている場合は早期停止する
+    """
     chunkmap: Dict[Tuple[int, int], Set[Tuple[int, str]]] = defaultdict(set)
+    # siege_points は将来的なアイコンやポイント表現用の保持場所（現状未使用）
     siege_points: List[dict] = []
 
     def fetch_emp(emp: Tuple[int, str]):
@@ -188,6 +256,8 @@ def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: 
                     break
                 if not t.get("active", True):
                     continue
+                # BitJita のレスポンスにおける内部座標
+                # docs により locationX が X、locationZ が Y（Z が Y 軸扱い）
                 x = t.get("locationX")
                 y = t.get("locationZ")
                 if x is None or y is None:
@@ -199,6 +269,7 @@ def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: 
                     yi = int(y)
                 except Exception:
                     continue
+                # 各塔は watchtower の影響範囲として中心チャンクから 5x5 チャンクを占有する
                 cx, cy = small_to_chunk(xi, yi)
                 for dx in range(-2, 3):
                     for dy in range(-2, 3):
@@ -215,6 +286,16 @@ def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: 
 
 
 def build_owner_and_contested_polys(chunkmap, log):
+    """chunkmap から Shapely ポリゴンを作り、所有者ごとと競合ポリゴンに分類して返す。
+
+    出力:
+      - owner_polys: {(eid,name): [Polygon, ...]}
+      - contested_polys: [Polygon, ...]
+
+    注意:
+      - Shapely が利用不可な場合は空を返す
+      - chunk_bounds の順序 (四隅) をそのまま Polygon に渡している
+    """
     owner_polys: Dict[Tuple[int, str], List] = defaultdict(list)
     contested_polys: List = []
     if not HAS_SHAPELY:
@@ -226,6 +307,7 @@ def build_owner_and_contested_polys(chunkmap, log):
         try:
             poly = _Polygon(coords)
         except Exception:
+            # 座標が不正などで Polygon が作れない場合はスキップ
             continue
         if len(owners) == 1:
             eid, name = next(iter(owners))
@@ -239,6 +321,7 @@ def merge_owner_geometries(owner_polys, log):
     merged_owner_geoms: Dict[Tuple[int, str], Any] = {}
     if not HAS_SHAPELY:
         return merged_owner_geoms
+    # 同一オーナーの複数チャンクポリゴンを unary_union で結合する
     t_merge_start = time.perf_counter()
     for (eid, name), polys in owner_polys.items():
         # local import to avoid module-level None issues and appease static checkers
@@ -261,10 +344,27 @@ def merge_owner_geometries(owner_polys, log):
 
 
 def build_adjacency(merged_owner_geoms, args, log):
+    """マージ済みオーナー幾何を受け取り、隣接グラフを返す。
+
+    入力:
+      merged_owner_geoms: {(eid,name): shapely_geom}
+      args: CLI 引数（force_pairwise を参照）
+
+    出力:
+      adjacency: {node: set(neighbor_nodes)}
+
+    最適化:
+      - オブジェクト数が十分に多い（>50）の場合、STRtree を使って候補を検索する。
+      - STRtree の query 結果は環境によって型が異なる（geom オブジェクトや index など）ため
+        保守的にハンドリングしている。
+    """
     nodes = list(merged_owner_geoms.keys())
     adjacency: Dict[Tuple[int, str], Set[Tuple[int, str]]] = {n: set() for n in nodes}
     log(f"Building adjacency graph for {len(nodes)} owner geometries...")
     t_adj_start = time.perf_counter()
+
+    # 隣接グラフを作る。ポリゴン同士が intersects/touches する場合に辺を張る。
+    # ノード数が多い場合は STRtree を使って候補検索を行い高速化する。
     if STRtree is not None and len(nodes) > 50 and not getattr(args, "force_pairwise", False):
         geom_list = [merged_owner_geoms[n] for n in nodes]
         try:
@@ -323,6 +423,15 @@ def build_adjacency(merged_owner_geoms, args, log):
 
 
 def greedy_coloring(adjacency, palette, log, verbose: bool):
+    """隣接グラフに貪欲着色を行う。
+
+    戦略:
+      - 隣接度の高い順でノードを並べ（降順）、利用可能なパレット色を割り当てる
+      - パレットに空きが無い場合はノードの eid に基づくデフォルト色を割り当てる
+
+    出力:
+      {node: color_hex}
+    """
     nodes = list(adjacency.keys())
     sorted_nodes = sorted(nodes, key=lambda n: len(adjacency[n]), reverse=True)
     assigned_color: Dict[Tuple[int, str], str] = {}
@@ -332,6 +441,7 @@ def greedy_coloring(adjacency, palette, log, verbose: bool):
         used = {assigned_color[nb] for nb in adjacency[n] if nb in assigned_color}
         pick = next((c for c in palette if c not in used), None)
         if pick is None:
+            # パレット枯渇時のフォールバック（決定論的）
             pick = PALETTE[n[0] % len(PALETTE)]
         assigned_color[n] = pick
         if verbose:
@@ -339,7 +449,20 @@ def greedy_coloring(adjacency, palette, log, verbose: bool):
     return assigned_color
 
 
-def emit_owner_features(merged_owner_geoms, assigned_color, log):
+def emit_owner_features(merged_owner_geoms, assigned_color):
+    """マージ済みジオメトリと色割り当てから GeoJSON Feature を生成する。
+
+    入力:
+      merged_owner_geoms: {(eid,name): shapely_geom}
+      assigned_color: {(eid,name): color_hex}
+
+    出力:
+      GeoJSON Feature リスト。各 Feature は mapping() によって GeoJSON 互換の dict に変換される。
+
+    注意:
+      - Shapely が利用不可なら空リストを返す
+      - mapping() 呼び出しが失敗するジオメトリはスキップされる
+    """
     features: List[dict] = []
     if not HAS_SHAPELY:
         return features
@@ -354,6 +477,7 @@ def emit_owner_features(merged_owner_geoms, assigned_color, log):
         try:
             geom_json = _mapping(geom)
         except Exception:
+            # ジオメトリの変換に失敗した場合はスキップ
             continue
         eid, name = owner_key
         color = assigned_color.get(owner_key, PALETTE[eid % len(PALETTE)])
