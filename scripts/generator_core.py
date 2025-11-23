@@ -417,7 +417,7 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
     sorted_nodes = sorted(nodes, key=lambda n: len(adjacency[n]), reverse=True)
     assigned_color: Dict[Tuple[int, str], str] = {}
 
-    color_by_eid: Dict[int, str] = {}
+    color_by_eid: Dict[int, dict] = {}
     if color_store_path:
         if os.path.exists(color_store_path):
             try:
@@ -436,12 +436,14 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
             except Exception as exc:
                 log(f"Failed to read color store {color_store_path}: {exc}; continuing with empty store")
                 loaded = {}
-
             for key, val in (loaded.items() if isinstance(loaded, dict) else []):
                 try:
-                    color_by_eid[int(key)] = val
+                    eid = int(key)
                 except Exception:
-                    color_by_eid[key] = val
+                    eid = key
+                if not isinstance(val, dict):
+                    continue
+                color_by_eid[eid] = {"name": val.get("name"), "color": val.get("color")}
             log(f"Loaded color store from {color_store_path} ({len(color_by_eid)} entries)")
         else:
             log(f"Color store not found at {color_store_path}; continuing with empty store")
@@ -450,16 +452,20 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
         log(f"Coloring order (top 20): {sorted_nodes[:20]}")
 
     for node_key in sorted_nodes:
-        empire_id = node_key[0]
-        stored = None
+        empire_id, empire_name = node_key
         try:
-            stored = color_by_eid.get(int(empire_id))
+            eid_key = int(empire_id)
         except Exception:
-            stored = color_by_eid.get(empire_id)
-        if stored is not None:
-            assigned_color[node_key] = stored
+            eid_key = empire_id
+
+        stored = color_by_eid.get(eid_key)
+        if stored is not None and stored.get("color"):
+            stored_color = stored.get("color")
+            if stored_color is not None:
+                assigned_color[node_key] = stored_color
+            stored["name"] = empire_name
             if verbose:
-                log(f"Reused stored color for {node_key}: {stored}")
+                log(f"Reused stored color for {node_key}: {stored.get('color')}")
             continue
 
         used = {assigned_color[neighbor] for neighbor in adjacency[node_key] if neighbor in assigned_color}
@@ -467,10 +473,13 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
         if pick is None:
             pick = COLOR_PALETTE[empire_id % len(COLOR_PALETTE)]
         assigned_color[node_key] = pick
-        try:
-            color_by_eid[int(empire_id)] = pick
-        except Exception:
-            color_by_eid[empire_id] = pick
+        existing = color_by_eid.get(eid_key)
+        if existing is None:
+            color_by_eid[eid_key] = {"name": empire_name, "color": pick}
+        else:
+            existing["name"] = empire_name
+            if not existing.get("color"):
+                existing["color"] = pick
         if verbose:
             log(f"Assigned color for {node_key}: {pick} (used around it: {used})")
 
@@ -492,10 +501,35 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
             except Exception as exc:
                 log(f"Failed to create directory for color store {dirpath}: {exc}")
 
-        dumpable = {ent_id: color_val for ent_id, color_val in color_by_eid.items()}
+        dumpable: Dict[object, object] = {}
+        def _ent_sort_key(kv):
+            ent_id = kv[0]
+            try:
+                return int(ent_id)
+            except Exception:
+                try:
+                    return int(str(ent_id))
+                except Exception:
+                    return str(ent_id)
+
+        for ent_id, val in sorted(color_by_eid.items(), key=_ent_sort_key):
+            name_val = None
+            color_val = None
+            if isinstance(val, dict):
+                name_val = val.get("name")
+                raw_color = val.get("color")
+                if isinstance(raw_color, str):
+                    color_val = raw_color if raw_color.startswith("#") else f"#{raw_color}"
+                else:
+                    color_val = None
+            else:
+                if isinstance(val, str):
+                    color_val = val if val.startswith("#") else f"#{val}"
+                name_val = None
+            dumpable[ent_id] = {"name": name_val, "color": color_val}
         try:
             with open(color_store_path, "w", encoding="utf-8") as outfile:
-                yaml.safe_dump(dumpable, outfile, allow_unicode=True)
+                yaml.safe_dump(dumpable, outfile, allow_unicode=True, sort_keys=False)
             log(f"Saved color store to {color_store_path} ({len(dumpable)} entries)")
         except Exception as exc:
             log(f"Failed to save color store {color_store_path}: {exc}")

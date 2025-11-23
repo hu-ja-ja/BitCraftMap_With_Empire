@@ -1,194 +1,582 @@
-40: '#AAFF00ff'
-126: '#FF5500ff'
-217: '#FF5500ff'
-381: '#00FFAAff'
-492: '#AAFF00ff'
-540: '#AAFF00ff'
-620: '#FF5500ff'
-810: '#AAFF00ff'
-965: '#AAFF00ff'
-1137: '#00FFAAff'
-1203: '#FF5500ff'
-1262: '#0088FFff'
-1605: '#FF5500ff'
-1807: '#00FFAAff'
-1965: '#FF5500ff'
-1985: '#AAFF00ff'
-2222: '#AAFF00ff'
-2291: '#FF5500ff'
-2433: '#AAFF00ff'
-2669: '#AAFF00ff'
-2730: '#AAFF00ff'
-3065: '#AAFF00ff'
-3504: '#00FFAAff'
-3671: '#FF5500ff'
-3753: '#FF5500ff'
-3788: '#AAFF00ff'
-3816: '#AAFF00ff'
-3959: '#FF5500ff'
-3973: '#AAFF00ff'
-4174: '#AAFF00ff'
-4460: '#00FFAAff'
-4580: '#00FFAAff'
-4630: '#0088FFff'
-5409: '#00FFAAff'
-5465: '#00FFAAff'
-5537: '#FF5500ff'
-5617: '#AAFF00ff'
-5677: '#FF5500ff'
-5716: '#0088FFff'
-5782: '#0088FFff'
-6043: '#AAFF00ff'
-6096: '#FF5500ff'
-6219: '#AAFF00ff'
-6290: '#AAFF00ff'
-6534: '#00FFAAff'
-7443: '#AAFF00ff'
-7549: '#FF5500ff'
-8072: '#AAFF00ff'
-8234: '#AAFF00ff'
-8580: '#00FFAAff'
-8742: '#00FFAAff'
-8953: '#0088FFff'
-8993: '#AAFF00ff'
-9128: '#FF5500ff'
-9175: '#00FFAAff'
-9655: '#FF5500ff'
-9671: '#00FFAAff'
-9829: '#FF5500ff'
-9867: '#0088FFff'
-10023: '#0088FFff'
-10197: '#FF5500ff'
-10290: '#AAFF00ff'
-10453: '#00FFAAff'
-11098: '#0088FFff'
-11311: '#0088FFff'
-11323: '#AAFF00ff'
-11365: '#FF5500ff'
-11902: '#FF5500ff'
-12103: '#AAFF00ff'
-12223: '#0088FFff'
-12242: '#FF5500ff'
-12458: '#00FFAAff'
-12518: '#FF5500ff'
-12744: '#0088FFff'
-12855: '#00FFAAff'
-13227: '#FF5500ff'
-13285: '#AAFF00ff'
-13438: '#00FFAAff'
-14611: '#FF5500ff'
-14695: '#00FFAAff'
-14757: '#00FFAAff'
-15073: '#FF5500ff'
-15715: '#FF5500ff'
-15741: '#00FFAAff'
-15837: '#0088FFff'
-16389: '#AAFF00ff'
-16503: '#0088FFff'
-16578: '#FF5500ff'
-16869: '#AAFF00ff'
-16989: '#AAFF00ff'
-17083: '#0088FFff'
-17177: '#0088FFff'
-17506: '#FF5500ff'
-17558: '#00FFAAff'
-17603: '#6600FFff'
-17871: '#FF5500ff'
-17893: '#0088FFff'
-18436: '#FF5500ff'
-18660: '#AAFF00ff'
-19501: '#FF5500ff'
-20364: '#00FFAAff'
-20819: '#00FFAAff'
-20971: '#00FFAAff'
-21210: '#AAFF00ff'
-21300: '#00FFAAff'
-22240: '#0088FFff'
-22457: '#FF5500ff'
-22966: '#FF5500ff'
-23018: '#FF5500ff'
-23403: '#FF5500ff'
-25743: '#00FFAAff'
-26235: '#00FFAAff'
-26869: '#AAFF00ff'
-27309: '#00FFAAff'
-28472: '#00FFAAff'
-29424: '#AAFF00ff'
-29684: '#AAFF00ff'
-30433: '#FF5500ff'
-30688: '#FF5500ff'
-31342: '#0088FFff'
-32052: '#AAFF00ff'
-32167: '#00FFAAff'
-32223: '#00FFAAff'
-32726: '#AAFF00ff'
-35540: '#FF5500ff'
-35621: '#AAFF00ff'
-36177: '#AAFF00ff'
-36333: '#0088FFff'
-37561: '#00FFAAff'
-37660: '#AAFF00ff'
-39958: '#FF5500ff'
-40948: '#00FFAAff'
-41397: '#FF5500ff'
-41713: '#00FFAAff'
-44258: '#6600FFff'
-44497: '#AAFF00ff'
-45603: '#6600FFff'
-45621: '#FF5500ff'
-45838: '#0088FFff'
-45926: '#0088FFff'
-45971: '#00FFAAff'
-46519: '#00FFAAff'
-48118: '#AAFF00ff'
-57322: '#AAFF00ff'
-57788: '#0088FFff'
-60919: '#AAFF00ff'
-65437: '#AAFF00ff'
-67047: '#FF5500ff'
-100587: '#AAFF00ff'
-110925: '#0088FFff'
-118603: '#FF5500ff'
-120631: '#AAFF00ff'
-122162: '#00FFAAff'
-130986: '#FF5500ff'
-140583: '#00FFAAff'
-164713: '#00FFAAff'
-165486: '#FF5500ff'
-172117: '#00FFAAff'
-172172: '#0088FFff'
-190108: '#0088FFff'
-195943: '#0088FFff'
-212837: '#00FFAAff'
-224117: '#00FFAAff'
-230245: '#AAFF00ff'
-252085: '#AAFF00ff'
-259725: '#00FFAAff'
-259911: '#FF5500ff'
-293490: '#FF5500ff'
-296634: '#00FFAAff'
-298873: '#AAFF00ff'
-312318: '#6600FFff'
-319008: '#AAFF00ff'
-325165: '#0088FFff'
-332026: '#AAFF00ff'
-337489: '#AAFF00ff'
-341390: '#00FFAAff'
-349827: '#FF5500ff'
-369465: '#00FFAAff'
-378123: '#0088FFff'
-382406: '#AAFF00ff'
-388798: '#AAFF00ff'
-401982: '#00FFAAff'
-414781: '#00FFAAff'
-427405: '#AAFF00ff'
-472468: '#AAFF00ff'
-525538: '#FF5500ff'
-613009: '#AAFF00ff'
-624986: '#0088FFff'
-650825: '#6600FFff'
-693454: '#AAFF00ff'
-779850: '#0088FFff'
-791760: '#00FFAAff'
-803175: '#AAFF00ff'
-869227: '#FF5500ff'
+40:
+  name: The Ottoadman Empire
+  color: '#AAFF00ff'
+126:
+  name: The Jaruudian Kingdom
+  color: '#FF5500ff'
+217:
+  name: Legion
+  color: '#FF5500ff'
+381:
+  name: Royaume de France
+  color: '#00FFAAff'
+492:
+  name: Valeria
+  color: '#AAFF00ff'
+540:
+  name: Umbilica
+  color: '#AAFF00ff'
+620:
+  name: Classis Borealis
+  color: '#FF5500ff'
+810:
+  name: Tavernhold
+  color: '#AAFF00ff'
+965:
+  name: Odynholm
+  color: '#AAFF00ff'
+1137:
+  name: Yggdrasil
+  color: '#00FFAAff'
+1203:
+  name: Volkov Trade Company
+  color: '#FF5500ff'
+1262:
+  name: Sol da Meia Noite
+  color: '#0088FFff'
+1605:
+  name: Chilling Place
+  color: '#FF5500ff'
+1807:
+  name: BitJita
+  color: '#00FFAAff'
+1965:
+  name: New Dawn Coalition
+  color: '#FF5500ff'
+1985:
+  name: The Free Cities of Floathaven
+  color: '#AAFF00ff'
+2222:
+  name: The Dark Side
+  color: '#AAFF00ff'
+2291:
+  name: Eclipse
+  color: '#FF5500ff'
+2433:
+  name: The Realm of Crown and Cask
+  color: '#AAFF00ff'
+2669:
+  name: The Veltrassan Federation
+  color: '#AAFF00ff'
+2730:
+  name: The Grove
+  color: '#AAFF00ff'
+3065:
+  name: Hikari
+  color: '#AAFF00ff'
+3504:
+  name: Ratopia
+  color: '#00FFAAff'
+3671:
+  name: The Empire of Nordgaard
+  color: '#FF5500ff'
+3753:
+  name: Lunaciel
+  color: '#FF5500ff'
+3788:
+  name: Roman Empire
+  color: '#AAFF00ff'
+3816:
+  name: Hold My Beer
+  color: '#AAFF00ff'
+3959:
+  name: The Hempire
+  color: '#FF5500ff'
+3973:
+  name: The Phluxian Church
+  color: '#AAFF00ff'
+4174:
+  name: Gallifrey Emporium
+  color: '#AAFF00ff'
+4460:
+  name: Widmoria
+  color: '#00FFAAff'
+4580:
+  name: Venture Trading Company
+  color: '#00FFAAff'
+4630:
+  name: Wardens
+  color: '#0088FFff'
+5409:
+  name: Tidegrove
+  color: '#00FFAAff'
+5465:
+  name: The Crimson Tide
+  color: '#00FFAAff'
+5537:
+  name: The Lands of Mordor
+  color: '#FF5500ff'
+5617:
+  name: First Light
+  color: '#AAFF00ff'
+5677:
+  name: ZYNBABWE
+  color: '#FF5500ff'
+5716:
+  name: Ancient Greece
+  color: '#0088FFff'
+5782:
+  name: Holy Bunbun Empire
+  color: '#0088FFff'
+6043:
+  name: Solumbris
+  color: '#AAFF00ff'
+6096:
+  name: Dragons Maw
+  color: '#FF5500ff'
+6219:
+  name: Alkahest
+  color: '#AAFF00ff'
+6290:
+  name: Mox
+  color: '#AAFF00ff'
+6534:
+  name: Imperio de la Luz
+  color: '#00FFAAff'
+7443:
+  name: Die Erbauer
+  color: '#AAFF00ff'
+7549:
+  name: Lich Core Dominion
+  color: '#FF5500ff'
+8072:
+  name: The United States of Bitcraft
+  color: '#AAFF00ff'
+8234:
+  name: The Abyss
+  color: '#AAFF00ff'
+8580:
+  name: Collective Braincell
+  color: '#00FFAAff'
+8742:
+  name: Doozer Dome
+  color: '#00FFAAff'
+8953:
+  name: The Towerborne Ecclesium
+  color: '#0088FFff'
+8993:
+  name: Golden Jakyls
+  color: '#AAFF00ff'
+9128:
+  name: Dreamless
+  color: '#FF5500ff'
+9175:
+  name: The Coven
+  color: '#00FFAAff'
+9655:
+  name: Vodowls
+  color: '#FF5500ff'
+9671:
+  name: Bober Empire
+  color: '#00FFAAff'
+9829:
+  name: Jura Tempest Federation
+  color: '#FF5500ff'
+9867:
+  name: Lunar Legion
+  color: '#0088FFff'
+10023:
+  name: The Ashen Empire
+  color: '#0088FFff'
+10197:
+  name: Númenor
+  color: '#FF5500ff'
+10290:
+  name: Seabrook
+  color: '#AAFF00ff'
+10453:
+  name: Sweetserland
+  color: '#00FFAAff'
+11098:
+  name: Saint Empire de Vachy
+  color: '#0088FFff'
+11311:
+  name: Velmarian Empire
+  color: '#0088FFff'
+11323:
+  name: Ashenreach
+  color: '#AAFF00ff'
+11365:
+  name: Great Star Ascendancy
+  color: '#FF5500ff'
+11902:
+  name: Lazy Nation
+  color: '#FF5500ff'
+12103:
+  name: The Wyrd
+  color: '#AAFF00ff'
+12223:
+  name: Twin Shore Trading
+  color: '#0088FFff'
+12242:
+  name: SAKURA
+  color: '#FF5500ff'
+12458:
+  name: Emberveil
+  color: '#00FFAAff'
+12518:
+  name: Goyda Federation
+  color: '#FF5500ff'
+12744:
+  name: Freeren
+  color: '#0088FFff'
+12855:
+  name: Greywood
+  color: '#00FFAAff'
+13227:
+  name: Dreadmark Empire
+  color: '#FF5500ff'
+13285:
+  name: Freakyborea RU
+  color: '#AAFF00ff'
+13438:
+  name: KOTONOE Shrine
+  color: '#00FFAAff'
+14611:
+  name: The Cozy Empire
+  color: '#FF5500ff'
+14695:
+  name: Fintastic Friends
+  color: '#00FFAAff'
+14757:
+  name: Kijin Empire
+  color: '#00FFAAff'
+15073:
+  name: Buffalo Wild Wings
+  color: '#FF5500ff'
+15715:
+  name: Order of the Mystic White Owl
+  color: '#FF5500ff'
+15741:
+  name: Hexwater Accord
+  color: '#00FFAAff'
+15837:
+  name: Apostles of the Shattered Sun
+  color: '#0088FFff'
+16389:
+  name: Dragons Throat
+  color: '#AAFF00ff'
+16503:
+  name: Empyrelite
+  color: '#0088FFff'
+16578:
+  name: Ithacan Thalassocracy
+  color: '#FF5500ff'
+16869:
+  name: Bloodbourne Reach
+  color: '#AAFF00ff'
+16989:
+  name: Mutually Assured Suction
+  color: '#AAFF00ff'
+17083:
+  name: Koyo
+  color: '#0088FFff'
+17177:
+  name: Nova Roma
+  color: '#0088FFff'
+17506:
+  name: Caprica
+  color: '#FF5500ff'
+17558:
+  name: Garden of Thornes
+  color: '#00FFAAff'
+17603:
+  name: Warsong
+  color: '#6600FFff'
+17871:
+  name: The Tarot Club
+  color: '#FF5500ff'
+17893:
+  name: The Muppet Dynasty
+  color: '#0088FFff'
+18436:
+  name: Buris Rest
+  color: '#FF5500ff'
+18660:
+  name: Karhide
+  color: '#AAFF00ff'
+19501:
+  name: Stormwatch
+  color: '#FF5500ff'
+20364:
+  name: Its Free Emil Estate
+  color: '#00FFAAff'
+20819:
+  name: Cossack Hetmanate
+  color: '#00FFAAff'
+20971:
+  name: Norvrandt
+  color: '#00FFAAff'
+21210:
+  name: Iridescent Institute
+  color: '#AAFF00ff'
+21300:
+  name: Squirrel Kingdom
+  color: '#00FFAAff'
+22240:
+  name: Socializing
+  color: '#0088FFff'
+22457:
+  name: Kitty Nation
+  color: '#FF5500ff'
+22966:
+  name: The Randy Ribbit Ranchers
+  color: '#FF5500ff'
+23018:
+  name: Daybreak
+  color: '#FF5500ff'
+23403:
+  name: Meow Meows
+  color: '#FF5500ff'
+25743:
+  name: The Hearth
+  color: '#00FFAAff'
+26235:
+  name: Sushi
+  color: '#00FFAAff'
+26869:
+  name: Black Flame
+  color: '#AAFF00ff'
+27309:
+  name: Nothing
+  color: '#00FFAAff'
+28472:
+  name: Sanctuary
+  color: '#00FFAAff'
+29424:
+  name: Elpis
+  color: '#AAFF00ff'
+29684:
+  name: Rivers Spire
+  color: '#AAFF00ff'
+30433:
+  name: The Fallen
+  color: '#FF5500ff'
+30688:
+  name: Wholesomeness
+  color: '#FF5500ff'
+31342:
+  name: Hamamatsu
+  color: '#0088FFff'
+32052:
+  name: BitCraft
+  color: '#AAFF00ff'
+32167:
+  name: Emberleaf Isles
+  color: '#00FFAAff'
+32223:
+  name: Tessathankful
+  color: '#00FFAAff'
+32726:
+  name: Ashforged Kinship
+  color: '#AAFF00ff'
+35540:
+  name: Empire of Valhalla
+  color: '#FF5500ff'
+35621:
+  name: Moonlight
+  color: '#AAFF00ff'
+36177:
+  name: DangerVille
+  color: '#AAFF00ff'
+36333:
+  name: BluntBerry Highlands
+  color: '#0088FFff'
+37561:
+  name: Whisperveil
+  color: '#00FFAAff'
+37660:
+  name: The Hunters Association
+  color: '#AAFF00ff'
+39958:
+  name: Purgatory
+  color: '#FF5500ff'
+40948:
+  name: Chaos Expanse
+  color: '#00FFAAff'
+41397:
+  name: Starborne
+  color: '#FF5500ff'
+41713:
+  name: Tsunami
+  color: '#00FFAAff'
+44258:
+  name: Peachridge
+  color: '#6600FFff'
+44497:
+  name: The Kingdom of Ithaca
+  color: '#AAFF00ff'
+45603:
+  name: Vanaheimr
+  color: '#6600FFff'
+45621:
+  name: Odynskogr
+  color: '#FF5500ff'
+45838:
+  name: SALT
+  color: '#0088FFff'
+45926:
+  name: the Unreturned
+  color: '#0088FFff'
+45971:
+  name: Mechanus
+  color: '#00FFAAff'
+46519:
+  name: Nebula
+  color: '#00FFAAff'
+48118:
+  name: Snowfall
+  color: '#AAFF00ff'
+57322:
+  name: Amazon
+  color: '#AAFF00ff'
+57788:
+  name: Kalos Region
+  color: '#0088FFff'
+60919:
+  name: The Grand Commerce Authority
+  color: '#AAFF00ff'
+65437:
+  name: The Church of Shrek
+  color: '#AAFF00ff'
+67047:
+  name: Celestia
+  color: '#FF5500ff'
+100587:
+  name: Unta
+  color: '#AAFF00ff'
+110925:
+  name: Gran Pulse
+  color: '#0088FFff'
+118603:
+  name: Gingerism
+  color: '#FF5500ff'
+120631:
+  name: The Kame Kartel
+  color: '#AAFF00ff'
+122162:
+  name: The Shirelands
+  color: '#00FFAAff'
+140583:
+  name: Amberwake
+  color: '#00FFAAff'
+164713:
+  name: Casuals
+  color: '#00FFAAff'
+165486:
+  name: Rattopia
+  color: '#FF5500ff'
+172117:
+  name: Heartspire
+  color: '#00FFAAff'
+172172:
+  name: Terra
+  color: '#0088FFff'
+190108:
+  name: The Shogunate
+  color: '#0088FFff'
+195943:
+  name: Tub City
+  color: '#0088FFff'
+212837:
+  name: The Pits Are Broken
+  color: '#00FFAAff'
+224117:
+  name: GUNMA
+  color: '#00FFAAff'
+230245:
+  name: Lunaris
+  color: '#AAFF00ff'
+252085:
+  name: Sinnoh
+  color: '#AAFF00ff'
+259725:
+  name: The Travelling Witches
+  color: '#00FFAAff'
+259911:
+  name: WAAAGH
+  color: '#FF5500ff'
+293490:
+  name: Aki No Teikoku
+  color: '#FF5500ff'
+296634:
+  name: Northern Armies
+  color: '#00FFAAff'
+298873:
+  name: Atlanta
+  color: '#AAFF00ff'
+312318:
+  name: Penumbra
+  color: '#6600FFff'
+319008:
+  name: Mika
+  color: '#AAFF00ff'
+325165:
+  name: Twilight Burrows
+  color: '#0088FFff'
+332026:
+  name: Hope
+  color: '#AAFF00ff'
+337489:
+  name: Khorne
+  color: '#AAFF00ff'
+341390:
+  name: Fallen Divinity
+  color: '#00FFAAff'
+349827:
+  name: Driftwood
+  color: '#FF5500ff'
+369465:
+  name: Bunnyhaven
+  color: '#00FFAAff'
+378123:
+  name: BlackHeart
+  color: '#0088FFff'
+382406:
+  name: Oceansky
+  color: '#AAFF00ff'
+388798:
+  name: The Riverlands
+  color: '#AAFF00ff'
+401982:
+  name: Sanity Limited
+  color: '#00FFAAff'
+414781:
+  name: Kingdom of Misthalin
+  color: '#00FFAAff'
+427405:
+  name: Lunisia
+  color: '#AAFF00ff'
+472468:
+  name: Dusty Corner
+  color: '#AAFF00ff'
+525538:
+  name: What The Forge
+  color: '#FF5500ff'
+613009:
+  name: Euphoria
+  color: '#AAFF00ff'
+624986:
+  name: Ardyn
+  color: '#0088FFff'
+650825:
+  name: 'One Man Kingdom '
+  color: '#6600FFff'
+693454:
+  name: Black Flag
+  color: '#AAFF00ff'
+779850:
+  name: Hickoria
+  color: '#0088FFff'
+791760:
+  name: Sanctuary of Sages
+  color: '#00FFAAff'
+803175:
+  name: Italian colonial empire
+  color: '#AAFF00ff'
+869227:
+  name: Fintland
+  color: '#FF5500ff'
+923996:
+  name: Ðiscombobulated
+  color: '#AAFF00ff'
