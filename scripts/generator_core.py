@@ -35,8 +35,8 @@ except Exception:
 BASE_URL = "https://bitjita.com"
 DEFAULT_USER_AGENT = "Map_With_Empire (discord: hu_ja_ja_)"
 
-# Shared palette for deterministic and greedy coloring
-PALETTE = [
+# Shared color palette for deterministic and greedy coloring
+COLOR_PALETTE = [
     "#FF5500ff",
     "#AAFF00ff",
     "#00FFAAff",
@@ -89,7 +89,7 @@ def _get_with_retries(session: requests.Session, url: str, limiter: RateLimiter,
     for attempt in range(1, max_retries + 1):
         limiter.acquire()
         try:
-            r = session.get(url, headers=headers, timeout=timeout)
+            response = session.get(url, headers=headers, timeout=timeout)
         except requests.RequestException:
             if attempt == max_retries:
                 raise
@@ -97,26 +97,26 @@ def _get_with_retries(session: requests.Session, url: str, limiter: RateLimiter,
             time.sleep(sleep_for)
             continue
 
-        if r.status_code == 429:
-            ra = r.headers.get("Retry-After")
+        if response.status_code == 429:
+            retry_after_header = response.headers.get("Retry-After")
             try:
-                wait = float(ra) if ra is not None else (backoff_base * (2 ** (attempt - 1)))
+                wait = float(retry_after_header) if retry_after_header is not None else (backoff_base * (2 ** (attempt - 1)))
             except Exception:
                 wait = backoff_base * (2 ** (attempt - 1))
             time.sleep(wait + random.random() * 0.2)
             if attempt == max_retries:
-                r.raise_for_status()
+                response.raise_for_status()
             continue
 
-        if 500 <= r.status_code < 600:
+        if 500 <= response.status_code < 600:
             if attempt == max_retries:
-                r.raise_for_status()
+                response.raise_for_status()
             sleep_for = backoff_base * (2 ** (attempt - 1)) + random.random() * 0.1
             time.sleep(sleep_for)
             continue
 
-        r.raise_for_status()
-        return r
+        response.raise_for_status()
+        return response
 
 
 class BitJitaClient:
@@ -129,10 +129,10 @@ class BitJitaClient:
         # /api/empires からエンパイア一覧を取得し、JSON の 'empires' を返す
         url = f"{BASE_URL}/api/empires"
         try:
-            r = _get_with_retries(self.session, url, self.limiter, headers={"User-Agent": self.user_agent})
-            if r is None:
+            response = _get_with_retries(self.session, url, self.limiter, headers={"User-Agent": self.user_agent})
+            if response is None:
                 return []
-            return r.json().get("empires", [])
+            return response.json().get("empires", [])
         except Exception:
             # 呼び出しに失敗した場合は空リストを返して呼び出し側で扱う
             return []
@@ -141,25 +141,25 @@ class BitJitaClient:
         # 指定エンパイアの塔情報を取得する（通常はリストを返す）
         url = f"{BASE_URL}/api/empires/{empire_id}/towers"
         try:
-            r = _get_with_retries(self.session, url, self.limiter, headers={"User-Agent": self.user_agent})
-            if r is None:
+            response = _get_with_retries(self.session, url, self.limiter, headers={"User-Agent": self.user_agent})
+            if response is None:
                 return []
-            return r.json()
+            return response.json()
         except Exception:
             return []
 
 
-def small_to_chunk(x: int, y: int) -> Tuple[int, int]:
+def smallhex_to_chunk(small_x: int, small_y: int) -> Tuple[int, int]:
     # SmallHexTile (ゲーム内部座標) をチャンク座標に変換する
     # 仕様：チャンク = floor(座標 / 96)
-    return (x // 96, y // 96)
+    return (small_x // 96, small_y // 96)
 
 
-def chunk_bounds(cx: int, cy: int) -> List[Tuple[int, int]]:
-    x0 = cx * 96
-    y0 = cy * 96
-    x1 = (cx + 1) * 96
-    y1 = (cy + 1) * 96
+def chunk_bounds(chunk_x: int, chunk_y: int) -> List[Tuple[int, int]]:
+    x0 = chunk_x * 96
+    y0 = chunk_y * 96
+    x1 = (chunk_x + 1) * 96
+    y1 = (chunk_y + 1) * 96
     return [(x0, y0), (x1, y0), (x1, y1), (x0, y1), (x0, y0)]
 
 
@@ -176,19 +176,19 @@ def build_features_from_chunkmap(chunkmap: Dict[Tuple[int, int], Set[Tuple[int, 
     """chunkmap を受け取り、チャンク単位の GeoJSON Feature リストを返す。
 
     入力:
-      chunkmap: {(cx,cy): set((eid, name), ...), ...}
+    chunkmap: {(chunk_x,chunk_y): set((eid, name), ...), ...}
 
-    出力:
-      GeoJSON Feature のリスト。各 Feature はチャンクの四角形ポリゴンで、
-      所有者が複数なら 'Contested' 表示、単一なら PALETTE から色を選ぶ。
+        出力:
+            GeoJSON Feature のリスト。各 Feature はチャンクの四角形ポリゴンで、
+            所有者が複数なら 'Contested' 表示、単一なら COLOR_PALETTE から色を選ぶ。
 
     注意点:
       - chunkmap のキーは任意の整数チャンク座標を許す（負値も理論上は可能）
       - 所有者セットが空のチャンクは無視する
     """
     features: List[dict] = []
-    for (cx, cy), owners in chunkmap.items():
-        coords = chunk_bounds(cx, cy)
+    for (chunk_x, chunk_y), owners in chunkmap.items():
+        coords = chunk_bounds(chunk_x, chunk_y)
         coords_list = _coords_to_feature_polygon(coords)
         if len(owners) == 0:
             # 所有者なしはスキップ
@@ -198,9 +198,9 @@ def build_features_from_chunkmap(chunkmap: Dict[Tuple[int, int], Set[Tuple[int, 
             owner_names = ", ".join(sorted(n for (_, n) in owners))
             props = {"popupText": f"Contested: {owner_names}", "color": "#888888", "fillColor": "#888888", "fillOpacity": 0.2}
         else:
-            # 単一オーナー -> PALETTE から色を選ぶ（deterministic）
+            # 単一オーナー -> COLOR_PALETTE から色を選ぶ（det deterministically）
             eid, name = next(iter(owners))
-            color = PALETTE[eid % len(PALETTE)]
+            color = COLOR_PALETTE[eid % len(COLOR_PALETTE)]
             props = {"popupText": name, "color": color, "fillColor": color, "fillOpacity": 0.4}
         feature = {"type": "Feature", "properties": props, "geometry": {"type": "Polygon", "coordinates": coords_list}}
         features.append(feature)
@@ -221,7 +221,7 @@ def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: 
 
     出力:
       (chunkmap, siege_points)
-      - chunkmap: {(cx,cy): set((eid,name), ...)} — チャンクごとの所有者集合
+    - chunkmap: {(chunk_x,chunk_y): set((eid,name), ...)} — チャンクごとの所有者集合
       - siege_points: 将来的な利用を想定した位置情報リスト（現状は未使用）
 
     挙動:
@@ -238,10 +238,10 @@ def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: 
         eid, name = emp
         try:
             log(f"Fetching towers for empire {eid} ({name})")
-            t0 = time.perf_counter()
+            fetch_start = time.perf_counter()
             towers = client.fetch_towers(eid)
-            t1 = time.perf_counter()
-            log(f"Fetched {len(towers)} towers for {eid} in {t1 - t0:.2f}s")
+            fetch_end = time.perf_counter()
+            log(f"Fetched {len(towers)} towers for {eid} in {fetch_end - fetch_start:.2f}s")
             return eid, name, towers
         except Exception as exc:
             log(f"Failed to fetch towers for {eid}: {exc}")
@@ -252,29 +252,29 @@ def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: 
         for fut in as_completed(futures):
             eid, name, towers = fut.result()
             towers_handled = 0
-            for t in towers:
+            for tower in towers:
                 if args.max_towers_per_empire > 0 and towers_handled >= args.max_towers_per_empire:
                     break
-                if not t.get("active", True):
+                if not tower.get("active", True):
                     continue
                 # BitJita のレスポンスにおける内部座標
                 # docs により locationX が X、locationZ が Y（Z が Y 軸扱い）
-                x = t.get("locationX")
-                y = t.get("locationZ")
-                if x is None or y is None:
+                loc_x = tower.get("locationX")
+                loc_y = tower.get("locationZ")
+                if loc_x is None or loc_y is None:
                     continue
-                if x <= 0 or y <= 0 or x > 23040 or y > 23040:
+                if loc_x <= 0 or loc_y <= 0 or loc_x > 23040 or loc_y > 23040:
                     continue
                 try:
-                    xi = int(x)
-                    yi = int(y)
+                    small_x_int = int(loc_x)
+                    small_y_int = int(loc_y)
                 except Exception:
                     continue
                 # 各塔は watchtower の影響範囲として中心チャンクから 5x5 チャンクを占有する
-                cx, cy = small_to_chunk(xi, yi)
-                for dx in range(-2, 3):
-                    for dy in range(-2, 3):
-                        chunkmap[(cx + dx, cy + dy)].add((eid, name))
+                chunk_x, chunk_y = smallhex_to_chunk(small_x_int, small_y_int)
+                for delta_x in range(-2, 3):
+                    for delta_y in range(-2, 3):
+                        chunkmap[(chunk_x + delta_x, chunk_y + delta_y)].add((eid, name))
                 towers_handled += 1
                 approx_features = len(chunkmap) + len(siege_points)
                 if args.max_features > 0 and approx_features >= args.max_features:
@@ -303,8 +303,8 @@ def build_owner_and_contested_polys(chunkmap, log):
         return owner_polys, contested_polys
     # local import to satisfy static analysis and ensure availability at runtime
     from shapely.geometry import Polygon as _Polygon
-    for (cx, cy), owners in chunkmap.items():
-        coords = chunk_bounds(cx, cy)
+    for (chunk_x, chunk_y), owners in chunkmap.items():
+        coords = chunk_bounds(chunk_x, chunk_y)
         try:
             poly = _Polygon(coords)
         except Exception:
@@ -370,36 +370,36 @@ def build_adjacency(merged_owner_geoms, args, log):
         geom_list = [merged_owner_geoms[n] for n in nodes]
         try:
             tree = STRtree(geom_list)
-            geom_id_to_index = {id(g): i for i, g in enumerate(geom_list)}
-            for i, g in enumerate(geom_list):
-                owner_key = nodes[i]
+            geom_id_to_index = {id(g): idx for idx, g in enumerate(geom_list)}
+            for idx_i, geom_i in enumerate(geom_list):
+                owner_key = nodes[idx_i]
                 try:
-                    candidates = tree.query(g)
+                    candidates = tree.query(geom_i)
                 except Exception:
                     candidates = []
-                for c in candidates:
-                    j = None
-                    if isinstance(c, int):
-                        j = c
+                for candidate in candidates:
+                    idx_j = None
+                    if isinstance(candidate, int):
+                        idx_j = candidate
                     else:
-                        j = geom_id_to_index.get(id(c))
-                        if j is None:
+                        idx_j = geom_id_to_index.get(id(candidate))
+                        if idx_j is None:
                             try:
-                                j = geom_list.index(c)
+                                idx_j = geom_list.index(candidate)
                             except Exception:
                                 try:
-                                    j = int(c)
+                                    idx_j = int(candidate)
                                 except Exception:
-                                    j = None
-                    if j is None or j == i:
+                                    idx_j = None
+                    if idx_j is None or idx_j == idx_i:
                         continue
-                    other = nodes[j]
+                    other = nodes[idx_j]
                     try:
-                        if isinstance(c, int):
-                            cgeom = geom_list[j]
+                        if isinstance(candidate, int):
+                            candidate_geom = geom_list[idx_j]
                         else:
-                            cgeom = c if hasattr(c, "geom_type") else geom_list[j]
-                        if g.intersects(cgeom) or g.touches(cgeom):
+                            candidate_geom = candidate if hasattr(candidate, "geom_type") else geom_list[idx_j]
+                        if geom_i.intersects(candidate_geom) or geom_i.touches(candidate_geom):
                             adjacency[owner_key].add(other)
                             adjacency[other].add(owner_key)
                     except Exception:
@@ -407,14 +407,14 @@ def build_adjacency(merged_owner_geoms, args, log):
         except Exception:
             pass
     else:
-        for i, a in enumerate(nodes):
-            ga = merged_owner_geoms[a]
-            for b in nodes[i + 1 :]:
-                gb = merged_owner_geoms[b]
+        for idx_i, node_a in enumerate(nodes):
+            geom_a = merged_owner_geoms[node_a]
+            for node_b in nodes[idx_i + 1 :]:
+                geom_b = merged_owner_geoms[node_b]
                 try:
-                    if ga.intersects(gb) or ga.touches(gb):
-                        adjacency[a].add(b)
-                        adjacency[b].add(a)
+                    if geom_a.intersects(geom_b) or geom_a.touches(geom_b):
+                        adjacency[node_a].add(node_b)
+                        adjacency[node_b].add(node_a)
                 except Exception:
                     continue
     t_adj_end = time.perf_counter()
@@ -455,18 +455,18 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
                 raise RuntimeError(msg)
 
             try:
-                with open(color_store_path, "r", encoding="utf-8") as f:
-                    loaded = yaml.safe_load(f) or {}
+                with open(color_store_path, "r", encoding="utf-8") as infile:
+                    loaded = yaml.safe_load(infile) or {}
             except Exception as exc:
                 log(f"Failed to read color store {color_store_path}: {exc}; continuing with empty store")
                 loaded = {}
 
-            for k, v in (loaded.items() if isinstance(loaded, dict) else []):
+            for key, val in (loaded.items() if isinstance(loaded, dict) else []):
                 try:
-                    color_by_eid[int(k)] = v
+                    color_by_eid[int(key)] = val
                 except Exception:
                     # keep key as-is if it isn't an int-like
-                    color_by_eid[k] = v
+                    color_by_eid[key] = val
             log(f"Loaded color store from {color_store_path} ({len(color_by_eid)} entries)")
         else:
             log(f"Color store not found at {color_store_path}; continuing with empty store")
@@ -474,8 +474,8 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
     if verbose:
         log(f"Coloring order (top 20): {sorted_nodes[:20]}")
 
-    for n in sorted_nodes:
-        eid = n[0]
+    for node_key in sorted_nodes:
+        eid = node_key[0]
         # If we have a persisted color for this entityId, reuse it.
         stored = None
         try:
@@ -483,24 +483,24 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
         except Exception:
             stored = color_by_eid.get(eid)
         if stored is not None:
-            assigned_color[n] = stored
+            assigned_color[node_key] = stored
             if verbose:
-                log(f"Reused stored color for {n}: {stored}")
+                log(f"Reused stored color for {node_key}: {stored}")
             continue
 
-        used = {assigned_color[nb] for nb in adjacency[n] if nb in assigned_color}
+        used = {assigned_color[neighbor] for neighbor in adjacency[node_key] if neighbor in assigned_color}
         pick = next((c for c in palette if c not in used), None)
         if pick is None:
             # パレット枯渇時のフォールバック（決定論的）
-            pick = PALETTE[eid % len(PALETTE)]
-        assigned_color[n] = pick
+            pick = COLOR_PALETTE[eid % len(COLOR_PALETTE)]
+        assigned_color[node_key] = pick
         # persist this assignment into the in-memory map so subsequent nodes can reuse it
         try:
             color_by_eid[int(eid)] = pick
         except Exception:
             color_by_eid[eid] = pick
         if verbose:
-            log(f"Assigned color for {n}: {pick} (used around it: {used})")
+            log(f"Assigned color for {node_key}: {pick} (used around it: {used})")
 
     # Save updated color store back to disk if requested
     if color_store_path:
@@ -524,10 +524,10 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
                 log(f"Failed to create directory for color store {dirpath}: {exc}")
 
         # write keys preserving numeric entityId types when possible
-        dumpable = {k: v for k, v in color_by_eid.items()}
+        dumpable = {ent_id: color_val for ent_id, color_val in color_by_eid.items()}
         try:
-            with open(color_store_path, "w", encoding="utf-8") as f:
-                yaml.safe_dump(dumpable, f, allow_unicode=True)
+            with open(color_store_path, "w", encoding="utf-8") as outfile:
+                yaml.safe_dump(dumpable, outfile, allow_unicode=True)
             log(f"Saved color store to {color_store_path} ({len(dumpable)} entries)")
         except Exception as exc:
             log(f"Failed to save color store {color_store_path}: {exc}")
@@ -566,7 +566,7 @@ def emit_owner_features(merged_owner_geoms, assigned_color):
             # ジオメトリの変換に失敗した場合はスキップ
             continue
         eid, name = owner_key
-        color = assigned_color.get(owner_key, PALETTE[eid % len(PALETTE)])
+        color = assigned_color.get(owner_key, COLOR_PALETTE[eid % len(COLOR_PALETTE)])
         props = {"popupText": name, "color": color, "fillColor": color, "fillOpacity": 0.2}
         features.append({"type": "Feature", "properties": props, "geometry": geom_json})
     return features

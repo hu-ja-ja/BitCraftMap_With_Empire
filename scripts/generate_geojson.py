@@ -63,17 +63,17 @@ def main() -> None:
 
     # 処理対象のエンパイア一覧を整形する
     emps_to_process = []
-    for e in empires:
+    for empire_entry in empires:
         if args.limit_empires > 0 and len(emps_to_process) >= args.limit_empires:
             break
-        eid = e.get("entityId")
+        eid = empire_entry.get("entityId")
         if eid is None:
             continue
         try:
             eid = int(eid)
         except Exception:
             continue
-        name = e.get("name", f"empire-{eid}")
+        name = empire_entry.get("name", f"empire-{eid}")
         emps_to_process.append((eid, name))
 
     log(f"Processing {len(emps_to_process)} empires with {args.workers} workers")
@@ -88,7 +88,7 @@ def main() -> None:
         owner_polys, contested_polys = generator_core.build_owner_and_contested_polys(chunkmap, log)
         merged = generator_core.merge_owner_geometries(owner_polys, log)
         adjacency = generator_core.build_adjacency(merged, args, log)
-        assigned = generator_core.greedy_coloring(adjacency, generator_core.PALETTE, log, args.verbose, args.color_store)
+        assigned = generator_core.greedy_coloring(adjacency, generator_core.COLOR_PALETTE, log, args.verbose, args.color_store)
         features.extend(generator_core.emit_owner_features(merged, assigned))
         # 競合領域（contested）は別にまとめて出力
         if contested_polys:
@@ -119,8 +119,8 @@ def main() -> None:
     }
     fc = {"type": "FeatureCollection", "features": [layer_off] + features}
     out = args.out
-    with open(out, "w", encoding="utf-8") as f:
-        json.dump(fc, f, ensure_ascii=False, indent=2)
+    with open(out, "w", encoding="utf-8") as outfile:
+        json.dump(fc, outfile, ensure_ascii=False, indent=2)
 
     print(f"Wrote {len(features)} features to {out}")
 
