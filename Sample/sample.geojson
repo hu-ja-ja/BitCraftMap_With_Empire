@@ -1,0 +1,52 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "popupText": "My custom waypoint",
+                "iconName": "HexCoin3",
+                "iconSize": [128,128],
+                "turnLayerOff": ["ruinedLayer","treesLayer","templesLayer"]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [15000, 15000]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "popupText": "My custom polygon",
+                "color": "#c24747ff"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [23040, 11520],
+                    [19666, 19666],
+                    [11520, 23040],
+                    [3374, 19666],
+                    [0, 11520],
+                    [3374, 3374],
+                    [11520, 0],
+                    [19666, 3374],
+                    [23040, 11520]
+                ]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "makeCanvas": 1,
+                "radius": 50,
+                "fillColor": "#3dd53fff",
+                "weight": 5
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [15000, 15000]
+            }
+        }
+    ]
+}

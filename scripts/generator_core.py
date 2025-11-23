@@ -16,6 +16,7 @@ from collections import defaultdict
 from typing import Any, Dict, List, Set, Tuple
 
 import requests
+import os
 
 try:
     from shapely.geometry import mapping as shapely_mapping
@@ -422,7 +423,7 @@ def build_adjacency(merged_owner_geoms, args, log):
     return adjacency
 
 
-def greedy_coloring(adjacency, palette, log, verbose: bool):
+def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: str | None = None):
     """隣接グラフに貪欲着色を行う。
 
     戦略:
@@ -435,17 +436,102 @@ def greedy_coloring(adjacency, palette, log, verbose: bool):
     nodes = list(adjacency.keys())
     sorted_nodes = sorted(nodes, key=lambda n: len(adjacency[n]), reverse=True)
     assigned_color: Dict[Tuple[int, str], str] = {}
+
+    # Load existing color store (entityId -> color) if path provided.
+    color_by_eid: Dict[int, str] = {}
+    if color_store_path:
+        # Only try to load the YAML file if it exists. If it doesn't, continue
+        # with an empty in-memory store (we'll create parent dir on save).
+        if os.path.exists(color_store_path):
+            # PyYAML is required — fail fast if not available
+            try:
+                import yaml
+            except Exception:
+                msg = (
+                    "PyYAML is required for color store support. This repository uses uv; run:"
+                    "\n    uv sync"
+                )
+                log(msg)
+                raise RuntimeError(msg)
+
+            try:
+                with open(color_store_path, "r", encoding="utf-8") as f:
+                    loaded = yaml.safe_load(f) or {}
+            except Exception as exc:
+                log(f"Failed to read color store {color_store_path}: {exc}; continuing with empty store")
+                loaded = {}
+
+            for k, v in (loaded.items() if isinstance(loaded, dict) else []):
+                try:
+                    color_by_eid[int(k)] = v
+                except Exception:
+                    # keep key as-is if it isn't an int-like
+                    color_by_eid[k] = v
+            log(f"Loaded color store from {color_store_path} ({len(color_by_eid)} entries)")
+        else:
+            log(f"Color store not found at {color_store_path}; continuing with empty store")
+
     if verbose:
         log(f"Coloring order (top 20): {sorted_nodes[:20]}")
+
     for n in sorted_nodes:
+        eid = n[0]
+        # If we have a persisted color for this entityId, reuse it.
+        stored = None
+        try:
+            stored = color_by_eid.get(int(eid))
+        except Exception:
+            stored = color_by_eid.get(eid)
+        if stored is not None:
+            assigned_color[n] = stored
+            if verbose:
+                log(f"Reused stored color for {n}: {stored}")
+            continue
+
         used = {assigned_color[nb] for nb in adjacency[n] if nb in assigned_color}
         pick = next((c for c in palette if c not in used), None)
         if pick is None:
             # パレット枯渇時のフォールバック（決定論的）
-            pick = PALETTE[n[0] % len(PALETTE)]
+            pick = PALETTE[eid % len(PALETTE)]
         assigned_color[n] = pick
+        # persist this assignment into the in-memory map so subsequent nodes can reuse it
+        try:
+            color_by_eid[int(eid)] = pick
+        except Exception:
+            color_by_eid[eid] = pick
         if verbose:
             log(f"Assigned color for {n}: {pick} (used around it: {used})")
+
+    # Save updated color store back to disk if requested
+    if color_store_path:
+        # PyYAML is required for saving as well — ensure available
+        try:
+            import yaml
+        except Exception:
+            msg = (
+                "PyYAML is required to save the color store. This repository uses uv; run:"
+                "\n    uv sync"
+            )
+            log(msg)
+            raise RuntimeError(msg)
+
+        # Ensure parent directory exists before writing
+        dirpath = os.path.dirname(color_store_path)
+        if dirpath:
+            try:
+                os.makedirs(dirpath, exist_ok=True)
+            except Exception as exc:
+                log(f"Failed to create directory for color store {dirpath}: {exc}")
+
+        # write keys preserving numeric entityId types when possible
+        dumpable = {k: v for k, v in color_by_eid.items()}
+        try:
+            with open(color_store_path, "w", encoding="utf-8") as f:
+                yaml.safe_dump(dumpable, f, allow_unicode=True)
+            log(f"Saved color store to {color_store_path} ({len(dumpable)} entries)")
+        except Exception as exc:
+            log(f"Failed to save color store {color_store_path}: {exc}")
+
     return assigned_color
 
 
