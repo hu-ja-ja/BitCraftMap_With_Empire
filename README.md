@@ -21,33 +21,24 @@ for https://github.com/bitcraftmap/bitcraftmap
 uv sync
 ```
 
-3. スクリプトを uv 経由で実行します（uv が仮想環境を管理します）:
+3. コマンドラインのエントリは `generate` コンソールスクリプトとしてパッケージに登録されています。`uv` 経由で実行してください（`uv` が仮想環境を管理します）:
 
 ```powershell
-# 直接実行
-uv run python .\scripts\generate_geojson.py
+# 直接実行（エイリアス `generate` を使用）
+uv run generate
 
 # ヘルプや引数付き実行
-uv run python .\scripts\generate_geojson.py --help
-uv run python .\scripts\generate_geojson.py --limit-empires 100 --verbose --out Resource/my.geojson
+uv run generate --help
+uv run generate --limit-empires 100 --verbose --out Resource/my.geojson
 ```
-
-4. Shapely をプロジェクトに追加したい場合（永続的に追加）:
-
-```powershell
-uv add shapely
-uv sync
-```
-
-一時的に実行だけで依存を追加したい場合は `uv run python -m pip install shapely` のようにしてください。
 
 ## スクリプトの使い方
-メインの CLI ラッパーは `scripts/generate_geojson.py` です。実行するとデフォルトで `Resource/generated.geojson` に出力します。
+パッケージに登録された CLI エントリ `generate` を `uv run` で呼び出してください。デフォルトでは `Resource/generated.geojson` に出力します。
 
 基本実行例 (uv 経由):
 
 ```powershell
-uv run python .\scripts\generate_geojson.py
+uv run generate
 ```
 
 主要な引数（抜粋）:
@@ -66,7 +57,7 @@ uv run python .\scripts\generate_geojson.py
 引数を指定した実行例 (uv 経由):
 
 ```powershell
-uv run python .\scripts\generate_geojson.py --limit-empires 100 --verbose --out Resource/my.geojson
+uv run generate --limit-empires 100 --verbose --out Resource/my.geojson
 ```
 
 ## 出力について
