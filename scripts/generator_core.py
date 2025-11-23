@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Core generator logic for BitJita -> GeoJSON.
+"""BitJita から GeoJSON へ変換するコア生成ロジック。
 
 このモジュールは BitJita API から取得したデータを GeoJSON に変換する
 主要なロジック（API クライアント、レートリミッタ、座標変換、チャンクマップ構築、
@@ -35,7 +35,6 @@ except Exception:
 BASE_URL = "https://bitjita.com"
 DEFAULT_USER_AGENT = "Map_With_Empire (discord: hu_ja_ja_)"
 
-# Shared color palette for deterministic and greedy coloring
 COLOR_PALETTE = [
     "#FF5500ff",
     "#AAFF00ff",
@@ -126,7 +125,6 @@ class BitJitaClient:
         self.user_agent = user_agent
 
     def fetch_empires(self) -> List[dict]:
-        # /api/empires からエンパイア一覧を取得し、JSON の 'empires' を返す
         url = f"{BASE_URL}/api/empires"
         try:
             response = _get_with_retries(self.session, url, self.limiter, headers={"User-Agent": self.user_agent})
@@ -134,11 +132,9 @@ class BitJitaClient:
                 return []
             return response.json().get("empires", [])
         except Exception:
-            # 呼び出しに失敗した場合は空リストを返して呼び出し側で扱う
             return []
 
     def fetch_towers(self, empire_id: int) -> List[dict]:
-        # 指定エンパイアの塔情報を取得する（通常はリストを返す）
         url = f"{BASE_URL}/api/empires/{empire_id}/towers"
         try:
             response = _get_with_retries(self.session, url, self.limiter, headers={"User-Agent": self.user_agent})
@@ -150,8 +146,6 @@ class BitJitaClient:
 
 
 def smallhex_to_chunk(small_x: int, small_y: int) -> Tuple[int, int]:
-    # SmallHexTile (ゲーム内部座標) をチャンク座標に変換する
-    # 仕様：チャンク = floor(座標 / 96)
     return (small_x // 96, small_y // 96)
 
 
@@ -191,17 +185,14 @@ def build_features_from_chunkmap(chunkmap: Dict[Tuple[int, int], Set[Tuple[int, 
         coords = chunk_bounds(chunk_x, chunk_y)
         coords_list = _coords_to_feature_polygon(coords)
         if len(owners) == 0:
-            # 所有者なしはスキップ
             continue
         if len(owners) > 1:
-            # 複数オーナー -> 競合表示
             owner_names = ", ".join(sorted(n for (_, n) in owners))
             props = {"popupText": f"Contested: {owner_names}", "color": "#888888", "fillColor": "#888888", "fillOpacity": 0.2}
         else:
-            # 単一オーナー -> COLOR_PALETTE から色を選ぶ（det deterministically）
-            eid, name = next(iter(owners))
-            color = COLOR_PALETTE[eid % len(COLOR_PALETTE)]
-            props = {"popupText": name, "color": color, "fillColor": color, "fillOpacity": 0.4}
+            empire_id, empire_name = next(iter(owners))
+            color = COLOR_PALETTE[empire_id % len(COLOR_PALETTE)]
+            props = {"popupText": empire_name, "color": color, "fillColor": color, "fillOpacity": 0.4}
         feature = {"type": "Feature", "properties": props, "geometry": {"type": "Polygon", "coordinates": coords_list}}
         features.append(feature)
     return features
@@ -231,56 +222,51 @@ def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: 
       - max_features / max_towers_per_empire が設定されている場合は早期停止する
     """
     chunkmap: Dict[Tuple[int, int], Set[Tuple[int, str]]] = defaultdict(set)
-    # siege_points は将来的なアイコンやポイント表現用の保持場所（現状未使用）
     siege_points: List[dict] = []
-
     def fetch_emp(emp: Tuple[int, str]):
-        eid, name = emp
+        empire_id, empire_name = emp
         try:
-            log(f"Fetching towers for empire {eid} ({name})")
+            log(f"Fetching towers for empire {empire_id} ({empire_name})")
             fetch_start = time.perf_counter()
-            towers = client.fetch_towers(eid)
+            towers = client.fetch_towers(empire_id)
             fetch_end = time.perf_counter()
-            log(f"Fetched {len(towers)} towers for {eid} in {fetch_end - fetch_start:.2f}s")
-            return eid, name, towers
+            log(f"Fetched {len(towers)} towers for {empire_id} in {fetch_end - fetch_start:.2f}s")
+            return empire_id, empire_name, towers
         except Exception as exc:
-            log(f"Failed to fetch towers for {eid}: {exc}")
-            return eid, name, []
+            log(f"Failed to fetch towers for {empire_id}: {exc}")
+            return empire_id, empire_name, []
 
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures = {pool.submit(fetch_emp, emp): emp for emp in emps_to_process}
         for fut in as_completed(futures):
-            eid, name, towers = fut.result()
+            empire_id, empire_name, towers = fut.result()
             towers_handled = 0
             for tower in towers:
                 if args.max_towers_per_empire > 0 and towers_handled >= args.max_towers_per_empire:
                     break
                 if not tower.get("active", True):
                     continue
-                # BitJita のレスポンスにおける内部座標
-                # docs により locationX が X、locationZ が Y（Z が Y 軸扱い）
-                loc_x = tower.get("locationX")
-                loc_y = tower.get("locationZ")
-                if loc_x is None or loc_y is None:
+                location_x = tower.get("locationX")
+                location_y = tower.get("locationZ")
+                if location_x is None or location_y is None:
                     continue
-                if loc_x <= 0 or loc_y <= 0 or loc_x > 23040 or loc_y > 23040:
+                if location_x <= 0 or location_y <= 0 or location_x > 23040 or location_y > 23040:
                     continue
                 try:
-                    small_x_int = int(loc_x)
-                    small_y_int = int(loc_y)
+                    small_x = int(location_x)
+                    small_y = int(location_y)
                 except Exception:
                     continue
-                # 各塔は watchtower の影響範囲として中心チャンクから 5x5 チャンクを占有する
-                chunk_x, chunk_y = smallhex_to_chunk(small_x_int, small_y_int)
+                chunk_x, chunk_y = smallhex_to_chunk(small_x, small_y)
                 for delta_x in range(-2, 3):
                     for delta_y in range(-2, 3):
-                        chunkmap[(chunk_x + delta_x, chunk_y + delta_y)].add((eid, name))
+                        chunkmap[(chunk_x + delta_x, chunk_y + delta_y)].add((empire_id, empire_name))
                 towers_handled += 1
                 approx_features = len(chunkmap) + len(siege_points)
                 if args.max_features > 0 and approx_features >= args.max_features:
                     log(f"Reached max-features={args.max_features}, stopping early")
                     break
-            print(f"Processed empire {eid} ({name}), towers handled: {towers_handled}")
+            print(f"Processed empire {empire_id} ({empire_name}), towers handled: {towers_handled}")
             time.sleep(throttle)
 
     return chunkmap, siege_points
@@ -301,20 +287,18 @@ def build_owner_and_contested_polys(chunkmap, log):
     contested_polys: List = []
     if not HAS_SHAPELY:
         return owner_polys, contested_polys
-    # local import to satisfy static analysis and ensure availability at runtime
     from shapely.geometry import Polygon as _Polygon
     for (chunk_x, chunk_y), owners in chunkmap.items():
         coords = chunk_bounds(chunk_x, chunk_y)
         try:
-            poly = _Polygon(coords)
+            polygon = _Polygon(coords)
         except Exception:
-            # 座標が不正などで Polygon が作れない場合はスキップ
             continue
         if len(owners) == 1:
-            eid, name = next(iter(owners))
-            owner_polys[(eid, name)].append(poly)
+            empire_id, empire_name = next(iter(owners))
+            owner_polys[(empire_id, empire_name)].append(polygon)
         elif len(owners) > 1:
-            contested_polys.append(poly)
+            contested_polys.append(polygon)
     return owner_polys, contested_polys
 
 
@@ -322,10 +306,8 @@ def merge_owner_geometries(owner_polys, log):
     merged_owner_geoms: Dict[Tuple[int, str], Any] = {}
     if not HAS_SHAPELY:
         return merged_owner_geoms
-    # 同一オーナーの複数チャンクポリゴンを unary_union で結合する
     t_merge_start = time.perf_counter()
-    for (eid, name), polys in owner_polys.items():
-        # local import to avoid module-level None issues and appease static checkers
+    for (empire_id, empire_name), polys in owner_polys.items():
         try:
             from shapely.ops import unary_union as _unary_union
         except Exception:
@@ -338,7 +320,7 @@ def merge_owner_geometries(owner_polys, log):
             except Exception:
                 merged = None
         if merged is not None:
-            merged_owner_geoms[(eid, name)] = merged
+            merged_owner_geoms[(empire_id, empire_name)] = merged
     t_merge_end = time.perf_counter()
     log(f"Merged owner polygons: {len(merged_owner_geoms)} owners (took {t_merge_end - t_merge_start:.2f}s)")
     return merged_owner_geoms
@@ -364,8 +346,6 @@ def build_adjacency(merged_owner_geoms, args, log):
     log(f"Building adjacency graph for {len(nodes)} owner geometries...")
     t_adj_start = time.perf_counter()
 
-    # 隣接グラフを作る。ポリゴン同士が intersects/touches する場合に辺を張る。
-    # ノード数が多い場合は STRtree を使って候補検索を行い高速化する。
     if STRtree is not None and len(nodes) > 50 and not getattr(args, "force_pairwise", False):
         geom_list = [merged_owner_geoms[n] for n in nodes]
         try:
@@ -437,13 +417,9 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
     sorted_nodes = sorted(nodes, key=lambda n: len(adjacency[n]), reverse=True)
     assigned_color: Dict[Tuple[int, str], str] = {}
 
-    # Load existing color store (entityId -> color) if path provided.
     color_by_eid: Dict[int, str] = {}
     if color_store_path:
-        # Only try to load the YAML file if it exists. If it doesn't, continue
-        # with an empty in-memory store (we'll create parent dir on save).
         if os.path.exists(color_store_path):
-            # PyYAML is required — fail fast if not available
             try:
                 import yaml
             except Exception:
@@ -465,7 +441,6 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
                 try:
                     color_by_eid[int(key)] = val
                 except Exception:
-                    # keep key as-is if it isn't an int-like
                     color_by_eid[key] = val
             log(f"Loaded color store from {color_store_path} ({len(color_by_eid)} entries)")
         else:
@@ -475,13 +450,12 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
         log(f"Coloring order (top 20): {sorted_nodes[:20]}")
 
     for node_key in sorted_nodes:
-        eid = node_key[0]
-        # If we have a persisted color for this entityId, reuse it.
+        empire_id = node_key[0]
         stored = None
         try:
-            stored = color_by_eid.get(int(eid))
+            stored = color_by_eid.get(int(empire_id))
         except Exception:
-            stored = color_by_eid.get(eid)
+            stored = color_by_eid.get(empire_id)
         if stored is not None:
             assigned_color[node_key] = stored
             if verbose:
@@ -491,20 +465,16 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
         used = {assigned_color[neighbor] for neighbor in adjacency[node_key] if neighbor in assigned_color}
         pick = next((c for c in palette if c not in used), None)
         if pick is None:
-            # パレット枯渇時のフォールバック（決定論的）
-            pick = COLOR_PALETTE[eid % len(COLOR_PALETTE)]
+            pick = COLOR_PALETTE[empire_id % len(COLOR_PALETTE)]
         assigned_color[node_key] = pick
-        # persist this assignment into the in-memory map so subsequent nodes can reuse it
         try:
-            color_by_eid[int(eid)] = pick
+            color_by_eid[int(empire_id)] = pick
         except Exception:
-            color_by_eid[eid] = pick
+            color_by_eid[empire_id] = pick
         if verbose:
             log(f"Assigned color for {node_key}: {pick} (used around it: {used})")
 
-    # Save updated color store back to disk if requested
     if color_store_path:
-        # PyYAML is required for saving as well — ensure available
         try:
             import yaml
         except Exception:
@@ -515,7 +485,6 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
             log(msg)
             raise RuntimeError(msg)
 
-        # Ensure parent directory exists before writing
         dirpath = os.path.dirname(color_store_path)
         if dirpath:
             try:
@@ -523,7 +492,6 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
             except Exception as exc:
                 log(f"Failed to create directory for color store {dirpath}: {exc}")
 
-        # write keys preserving numeric entityId types when possible
         dumpable = {ent_id: color_val for ent_id, color_val in color_by_eid.items()}
         try:
             with open(color_store_path, "w", encoding="utf-8") as outfile:
@@ -553,7 +521,6 @@ def emit_owner_features(merged_owner_geoms, assigned_color):
     if not HAS_SHAPELY:
         return features
     for owner_key, geom in merged_owner_geoms.items():
-        # do a local import for mapping to avoid module-level None issues
         try:
             from shapely.geometry import mapping as _mapping
         except Exception:
@@ -563,10 +530,9 @@ def emit_owner_features(merged_owner_geoms, assigned_color):
         try:
             geom_json = _mapping(geom)
         except Exception:
-            # ジオメトリの変換に失敗した場合はスキップ
             continue
-        eid, name = owner_key
-        color = assigned_color.get(owner_key, COLOR_PALETTE[eid % len(COLOR_PALETTE)])
-        props = {"popupText": name, "color": color, "fillColor": color, "fillOpacity": 0.2}
+        empire_id, empire_name = owner_key
+        color = assigned_color.get(owner_key, COLOR_PALETTE[empire_id % len(COLOR_PALETTE)])
+        props = {"popupText": empire_name, "color": color, "fillColor": color, "fillOpacity": 0.2}
         features.append({"type": "Feature", "properties": props, "geometry": geom_json})
     return features

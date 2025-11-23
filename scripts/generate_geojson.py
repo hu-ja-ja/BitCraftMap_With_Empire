@@ -20,7 +20,6 @@ import time
 import os
 import sys
 
-# ensure we can import sibling module 'generator_core'
 sys.path.insert(0, os.path.dirname(__file__))
 import generator_core
 
@@ -42,26 +41,21 @@ def main() -> None:
 
     throttle = args.throttle_ms / 1000.0
 
-    # ログ出力ヘルパー（verbose 時のみタイムスタンプ付きで出力）
     def log(msg: str) -> None:
         if args.verbose:
             ts = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             print(f"[{ts}] {msg}", flush=True)
 
-    # HTTP セッション、レートリミッタ、BitJita クライアントを初期化
-    # これらは generator_core のクラスを利用します（テストや差し替えが容易）
     session = generator_core.requests.Session()
     limiter = generator_core.RateLimiter(rate_per_min=args.rate_per_min)
     client = generator_core.BitJitaClient(session, limiter, args.user_agent)
 
-    # エンパイア一覧を取得（API 呼び出し）
     log("Fetching empires...")
     t_fetch_start = time.perf_counter()
     empires = client.fetch_empires()
     t_fetch_end = time.perf_counter()
     log(f"Fetched empires: {len(empires)} (took {t_fetch_end - t_fetch_start:.2f}s)")
 
-    # 処理対象のエンパイア一覧を整形する
     emps_to_process = []
     for empire_entry in empires:
         if args.limit_empires > 0 and len(emps_to_process) >= args.limit_empires:
@@ -78,19 +72,15 @@ def main() -> None:
 
     log(f"Processing {len(emps_to_process)} empires with {args.workers} workers")
 
-    # メイン処理：各エンパイアの塔を取得してチャンクマップに変換する
-    # 戦略：複数スレッドで並列取得し、各塔の影響範囲（5x5チャンク）を chunkmap に追加
     chunkmap, siege_points = generator_core.process_empires_to_chunkmap(emps_to_process, client, args, throttle, log)
 
     features = []
-    # Shapely が利用可能ならポリゴン結合・隣接グラフの構築・貪欲着色を行い、最終的な GeoJSON Feature を構築する
     if generator_core.HAS_SHAPELY:
         owner_polys, contested_polys = generator_core.build_owner_and_contested_polys(chunkmap, log)
         merged = generator_core.merge_owner_geometries(owner_polys, log)
         adjacency = generator_core.build_adjacency(merged, args, log)
         assigned = generator_core.greedy_coloring(adjacency, generator_core.COLOR_PALETTE, log, args.verbose, args.color_store)
         features.extend(generator_core.emit_owner_features(merged, assigned))
-        # 競合領域（contested）は別にまとめて出力
         if contested_polys:
             try:
                 merged_contested = generator_core.unary_union(contested_polys)
@@ -101,11 +91,9 @@ def main() -> None:
                 props = {"popupText": "Contested", "color": "#888888", "fillColor": "#888888", "fillOpacity": 0.4}
                 features.append({"type": "Feature", "properties": props, "geometry": geom})
     else:
-        # Shapely が無い場合はチャンク単位でそのままポリゴンを出力する
         print("Warning: shapely not available — output will contain one polygon per chunk (no merging). Install shapely for merged polygons.")
         features.extend(generator_core.build_features_from_chunkmap(chunkmap))
 
-    # 地図 UI 用にダミーの Feature を先頭に入れる（既存の出力と互換性を保つため）
     layer_off = {
         "type": "Feature",
         "properties": {
