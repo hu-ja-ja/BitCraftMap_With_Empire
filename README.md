@@ -1,12 +1,13 @@
 # BitCraftMap_With_Empire
-for https://github.com/bitcraftmap/bitcraftmap
+
+for [https://github.com/bitcraftmap/bitcraftmap]
 
 このリポジトリは BitJita のエンパイア／塔データを取得し、GeoJSON に変換する小さなツール群を含みます。
 
 ## 前提: uv を使う
 
 このリポジトリは `uv`（Astral のパッケージマネージャ）を使って依存を再現する前提での利用を想定しています。
-公式ドキュメント: https://docs.astral.sh/uv
+公式ドキュメント: [https://docs.astral.sh/uv]
 
 注意: リポジトリに含まれる `uv.lock` に Python の要件が書かれている場合があります（例: `requires-python = ">=3.13"`）。`uv sync` を実行する前にご自身の環境がその要件を満たすか確認してください。満たさない場合は `uv python install <version>` で適切な Python を用意してください。
 
@@ -33,6 +34,7 @@ uv run generate --limit-empires 100 --verbose --out Resource/my.geojson
 ```
 
 ## スクリプトの使い方
+
 パッケージに登録された CLI エントリ `generate` を `uv run` で呼び出してください。デフォルトでは `Resource/generated.geojson` に出力します。
 
 基本実行例 (uv 経由):
@@ -53,6 +55,7 @@ uv run generate
 - `--workers` : 並列ワーカ数（デフォルト 8）
 - `--verbose` : 進捗ログを詳細に出力
 - `--force-pairwise` : STRtree を無効化してペアワイズ判定に強制（デバッグ用）
+- `--color-store` : エンティティID -> 色マップを格納する YAML ファイルのパス（デフォルト: `Resource/color_map.yaml`）
 
 引数を指定した実行例 (uv 経由):
 
@@ -61,31 +64,20 @@ uv run generate --limit-empires 100 --verbose --out Resource/my.geojson
 ```
 
 ## 出力について
+
 - 出力は GeoJSON の FeatureCollection です。既存の `Resource/sample.geojson` と互換性を保つプロパティを付与しています。
 - Shapely がインストールされていると、オーナーごとのポリゴンがマージされ、隣接グラフに基づく色付けが行われます。Shapely がない場合はチャンク単位のポリゴンがそのまま出力されます。
 
 ## 注意点
+
 - BitJita API にはレート制限があります。デフォルト設定でも過度な同時実行は避けてください。
 - `uv.lock` / `pyproject.toml` に記載された Python バージョン要件を確認してください。必要なら `uv python install <version>` を使って適切な Python を用意してください。
 - マッピングルールや座標変換の詳細は `要件.md` を参照してください。
 
 ## 追加ヘルプ
+
 より詳しいオプションはスクリプトの `--help` をご利用ください:
 
 ```powershell
-uv run python .\scripts\generate_geojson.py --help
+uv run generate --help
 ```
-
-- Shapely がインストールされていると、オーナーごとのポリゴンがマージされ、隣接グラフに基づく色付けが行われます。Shapely がない場合はチャンク単位のポリゴンがそのまま出力されます。
-
-## 注意点
-- BitJita API にはレート制限があります。デフォルト設定でも過度な同時実行は避けてください。
-- 既存の `要件.md` に座標変換やビジネスルールの詳細が書かれています。マッピングロジックを変更する場合はそちらを参照してください。
-
-## 追加ヘルプ
-より詳しいオプションはスクリプトの `--help` をご利用ください:
-
-```powershell
-python .\scripts\generate_geojson.py --help
-```
-
