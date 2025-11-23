@@ -65,8 +65,7 @@ uv run generate --limit-empires 100 --verbose --out Resource/my.geojson
 
 ## 出力について
 
-- 出力は GeoJSON の FeatureCollection です。既存の `Resource/sample.geojson` と互換性を保つプロパティを付与しています。
-- Shapely がインストールされていると、オーナーごとのポリゴンがマージされ、隣接グラフに基づく色付けが行われます。Shapely がない場合はチャンク単位のポリゴンがそのまま出力されます。
+- 出力は GeoJSON の FeatureCollection です。既存の `Sample\sample.geojson` と互換性を保つプロパティを付与しています。
 
 ## 注意点
 
