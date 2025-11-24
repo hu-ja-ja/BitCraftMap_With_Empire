@@ -428,7 +428,7 @@
   name: Snowfall
   color: '#AAFF00ff'
 57322:
-  name: Amazon
+  name: Holy Order of the Crimson Cross
   color: '#AAFF00ff'
 57788:
   name: Kalos Region
@@ -580,3 +580,6 @@
 923996:
   name: Ðiscombobulated
   color: '#AAFF00ff'
+695136:
+  name: The Urglands
+  color: '#00FFAAff'

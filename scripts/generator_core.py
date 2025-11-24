@@ -1,11 +1,31 @@
 #!/usr/bin/env python3
-"""BitJita から GeoJSON へ変換するコア生成ロジック。
+"""BitJita データを取得して GeoJSON を出力するコア生成ロジック。
 
-このモジュールは BitJita API から取得したデータを GeoJSON に変換する
-主要なロジック（API クライアント、レートリミッタ、座標変換、チャンクマップ構築、
-Shapely を使ったポリゴン結合や隣接グラフ、色付けなど）を含みます。
+このモジュールは BitJita API から取得したエンパイア／塔データを受け取り、
+チャンク単位の所有マップを作成し、Shapely を用いて所有領域のマージ、
+隣接グラフ構築、貪欲着色を行い GeoJSON に変換する責務を持ちます。
 
-`generate_geojson.py` はこのモジュールを薄くラップして CLI を提供します。
+主な役割:
+- HTTP クライアントと簡易トークンバケット `RateLimiter` による API 取得
+- 小座標 (SmallHexTile) -> チャンク変換、チャンク四隅の算出
+- 各塔の 5x5 チャンク占有範囲の集計（watchtower extent）
+- Shapely によるチャンクポリゴンの結合と隣接性判定
+- 永続化された色ストア（YAML）を用いた貪欲着色と GeoJSON 生成
+
+依存・前提:
+- Python 3.12+
+- `requests` — BitJita API 呼び出し
+- `pyyaml` — 色ストアの読み書き（`scripts/color_store.py` を使用）
+- `shapely` — ポリゴンのマージ・隣接判定（起動時に存在チェックを行います）
+
+設計ノート:
+- CLI は `scripts/generate_geojson.py` にあり、当該モジュールはロジックを提供します。
+- 再利用性を高めるため、座標変換と色ストア I/O はそれぞれ
+    `scripts/coords.py` / `scripts/color_store.py` に分割しています。
+
+使用例:
+    uv run generate
+
 """
 from __future__ import annotations
 
@@ -13,10 +33,16 @@ import time
 import threading
 import random
 from collections import defaultdict
+
+try:
+    from . import color_store as _color_store
+    from . import coords as _coords
+except Exception:
+    import color_store as _color_store
+    import coords as _coords
 from typing import Any, Dict, List, Set, Tuple
 
 import requests
-import os
 
 try:
     from shapely.geometry import mapping as shapely_mapping
@@ -145,25 +171,10 @@ class BitJitaClient:
             return []
 
 
-def smallhex_to_chunk(small_x: int, small_y: int) -> Tuple[int, int]:
-    return (small_x // 96, small_y // 96)
-
-
-def chunk_bounds(chunk_x: int, chunk_y: int) -> List[Tuple[int, int]]:
-    x0 = chunk_x * 96
-    y0 = chunk_y * 96
-    x1 = (chunk_x + 1) * 96
-    y1 = (chunk_y + 1) * 96
-    return [(x0, y0), (x1, y0), (x1, y1), (x0, y1), (x0, y0)]
-
-
-def _coords_to_feature_polygon(coords: List[Tuple[int, int]]) -> List[List[List[int]]]:
-    """ヘルパー: chunk_bounds の出力を GeoJSON の Polygon 座標形式に変換する。
-
-    返り値の形: [[[x0,y0],[x1,y0],...]] のような 1 要素のリスト（外殻のみ）。
-    この関数は内部利用のみで、明示的に GeoJSON 形式に整形する役割を持つ。
-    """
-    return [[list(p) for p in coords]]
+# delegate chunk/coords helpers to scripts/coords.py
+smallhex_to_chunk = _coords.smallhex_to_chunk
+chunk_bounds = _coords.chunk_bounds
+_coords_to_feature_polygon = _coords.coords_to_feature_polygon
 
 
 def build_features_from_chunkmap(chunkmap: Dict[Tuple[int, int], Set[Tuple[int, str]]]) -> List[dict]:
@@ -257,10 +268,8 @@ def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: 
                     small_y = int(location_y)
                 except Exception:
                     continue
-                chunk_x, chunk_y = smallhex_to_chunk(small_x, small_y)
-                for delta_x in range(-2, 3):
-                    for delta_y in range(-2, 3):
-                        chunkmap[(chunk_x + delta_x, chunk_y + delta_y)].add((empire_id, empire_name))
+                for (cx, cy) in _coords.tower_covered_chunks(small_x, small_y, radius_chunks=2):
+                    chunkmap[(cx, cy)].add((empire_id, empire_name))
                 towers_handled += 1
                 approx_features = len(chunkmap) + len(siege_points)
                 if args.max_features > 0 and approx_features >= args.max_features:
@@ -404,49 +413,33 @@ def build_adjacency(merged_owner_geoms, args, log):
 
 
 def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: str | None = None):
-    """隣接グラフに貪欲着色を行う。
+    """隣接グラフに対して貪欲着色を行い、色情報を `scripts.color_store` 経由で永続化する。
 
-    戦略:
-      - 隣接度の高い順でノードを並べ（降順）、利用可能なパレット色を割り当てる
-      - パレットに空きが無い場合はノードの eid に基づくデフォルト色を割り当てる
-
-    出力:
-      {node: color_hex}
+    - 既存の色があればそれを優先して使う（上書きしない）。
+    - 毎回 `name` フィールドは更新する。
+    - `color_store_path` が指定されればロード/セーブを行う。
     """
+    # load existing store if provided
+    if color_store_path:
+        try:
+            store = _color_store.load_color_store(color_store_path)
+            log(f"Loaded color store from {color_store_path} ({len(store)} entries)")
+        except Exception as exc:
+            log(f"Failed to load color store {color_store_path}: {exc}; continuing with empty store")
+            store = {}
+    else:
+        store = {}
+
     nodes = list(adjacency.keys())
     sorted_nodes = sorted(nodes, key=lambda n: len(adjacency[n]), reverse=True)
     assigned_color: Dict[Tuple[int, str], str] = {}
 
-    color_by_eid: Dict[int, dict] = {}
-    if color_store_path:
-        if os.path.exists(color_store_path):
-            try:
-                import yaml
-            except Exception:
-                msg = (
-                    "PyYAML is required for color store support. This repository uses uv; run:"
-                    "\n    uv sync"
-                )
-                log(msg)
-                raise RuntimeError(msg)
-
-            try:
-                with open(color_store_path, "r", encoding="utf-8") as infile:
-                    loaded = yaml.safe_load(infile) or {}
-            except Exception as exc:
-                log(f"Failed to read color store {color_store_path}: {exc}; continuing with empty store")
-                loaded = {}
-            for key, val in (loaded.items() if isinstance(loaded, dict) else []):
-                try:
-                    eid = int(key)
-                except Exception:
-                    eid = key
-                if not isinstance(val, dict):
-                    continue
-                color_by_eid[eid] = {"name": val.get("name"), "color": val.get("color")}
-            log(f"Loaded color store from {color_store_path} ({len(color_by_eid)} entries)")
-        else:
-            log(f"Color store not found at {color_store_path}; continuing with empty store")
+    # reuse persisted colors when available
+    for eid, meta in list(store.items()):
+        if meta.get("color"):
+            # meta color expected to be normalized already (helper ensures leading '#')
+            # map persisted by eid -> runtime key (eid,name) is resolved below when iterating nodes
+            pass
 
     if verbose:
         log(f"Coloring order (top 20): {sorted_nodes[:20]}")
@@ -458,79 +451,39 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
         except Exception:
             eid_key = empire_id
 
-        stored = color_by_eid.get(eid_key)
-        if stored is not None and stored.get("color"):
-            stored_color = stored.get("color")
-            if stored_color is not None:
-                assigned_color[node_key] = stored_color
-            stored["name"] = empire_name
+        # if persisted color exists for this eid, reuse
+        persisted = store.get(eid_key)
+        if persisted and persisted.get("color") is not None:
+            color_val = persisted.get("color")
+            if color_val:
+                assigned_color[node_key] = color_val
+            # always update name
+            persisted["name"] = empire_name
             if verbose:
-                log(f"Reused stored color for {node_key}: {stored.get('color')}")
+                log(f"Reused stored color for {node_key}: {color_val}")
             continue
 
-        used = {assigned_color[neighbor] for neighbor in adjacency[node_key] if neighbor in assigned_color}
-        pick = next((c for c in palette if c not in used), None)
-        if pick is None:
-            pick = COLOR_PALETTE[empire_id % len(COLOR_PALETTE)]
+        # collect neighbor colors
+        used = {assigned_color[n] for n in adjacency[node_key] if n in assigned_color}
+        pick = next((c for c in palette if c not in used), palette[0])
         assigned_color[node_key] = pick
-        existing = color_by_eid.get(eid_key)
+
+        # ensure store has entry
+        existing = store.get(eid_key)
         if existing is None:
-            color_by_eid[eid_key] = {"name": empire_name, "color": pick}
+            store[eid_key] = {"name": empire_name, "color": pick}
         else:
-            existing["name"] = empire_name
+            existing.setdefault("name", empire_name)
             if not existing.get("color"):
                 existing["color"] = pick
         if verbose:
             log(f"Assigned color for {node_key}: {pick} (used around it: {used})")
 
+    # persist back
     if color_store_path:
         try:
-            import yaml
-        except Exception:
-            msg = (
-                "PyYAML is required to save the color store. This repository uses uv; run:"
-                "\n    uv sync"
-            )
-            log(msg)
-            raise RuntimeError(msg)
-
-        dirpath = os.path.dirname(color_store_path)
-        if dirpath:
-            try:
-                os.makedirs(dirpath, exist_ok=True)
-            except Exception as exc:
-                log(f"Failed to create directory for color store {dirpath}: {exc}")
-
-        dumpable: Dict[object, object] = {}
-        def _ent_sort_key(kv):
-            ent_id = kv[0]
-            try:
-                return int(ent_id)
-            except Exception:
-                try:
-                    return int(str(ent_id))
-                except Exception:
-                    return str(ent_id)
-
-        for ent_id, val in sorted(color_by_eid.items(), key=_ent_sort_key):
-            name_val = None
-            color_val = None
-            if isinstance(val, dict):
-                name_val = val.get("name")
-                raw_color = val.get("color")
-                if isinstance(raw_color, str):
-                    color_val = raw_color if raw_color.startswith("#") else f"#{raw_color}"
-                else:
-                    color_val = None
-            else:
-                if isinstance(val, str):
-                    color_val = val if val.startswith("#") else f"#{val}"
-                name_val = None
-            dumpable[ent_id] = {"name": name_val, "color": color_val}
-        try:
-            with open(color_store_path, "w", encoding="utf-8") as outfile:
-                yaml.safe_dump(dumpable, outfile, allow_unicode=True, sort_keys=False)
-            log(f"Saved color store to {color_store_path} ({len(dumpable)} entries)")
+            _color_store.save_color_store(color_store_path, store)
+            log(f"Saved color store to {color_store_path} ({len(store)} entries)")
         except Exception as exc:
             log(f"Failed to save color store {color_store_path}: {exc}")
 

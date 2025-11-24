@@ -1,16 +1,28 @@
 #!/usr/bin/env python3
-"""CLI wrapper for generator_core.
+"""BitCraftMap ジェネレータの CLI エントリポイント。
 
-このスクリプトはコマンドライン引数をパースして `generator_core` の関数に委譲します。
-主に次を行います：
-- コマンドライン引数の処理
-- BitJita クライアントの初期化（セッション・レートリミッタ）
-- エンパイア一覧の取得と処理対象リストの作成
-- `process_empires_to_chunkmap` を呼んでチャンクマップを取得
-- Shapely が利用可能ならポリゴンのマージや色付け、Feature 出力
-- 最終的に GeoJSON を出力する
+このスクリプトは軽量なコマンドラインラッパーであり、引数を解析して
+`generator_core.py` の実装に処理を委譲します。
 
-注：このファイルは薄いラッパーで、実際のロジックは `generator_core.py` にあります。
+主な役割:
+- CLI オプションの解析（出力パス、スロットル、ワーカー数、上限など）
+- HTTP セッションとトークンバケット方式の `RateLimiter` の初期化
+- エンパイア一覧の取得と並列での塔取得を行い、
+    `generator_core.process_empires_to_chunkmap` を用いてチャンク所有マップを構築
+- Shapely が利用可能な場合はチャンクポリゴンを結合し、隣接性を計算して色付けし、
+    GeoJSON フィーチャを出力。利用不可の場合はチャンク単位のポリゴンを出力
+
+依存・前提:
+- Python 3.12+
+- `requests` — BitJita API 呼び出し
+- `pyyaml` — 色ストアの読み書き（`scripts/color_store.py` を使用）
+- `shapely` — ポリゴンのマージ・隣接判定（起動時に存在チェックを行います）
+
+使用例:
+    uv run generate
+
+備考:
+このファイルは CLI のみを担当し、主要ロジックは `scripts/generator_core.py` に移譲しています。
 """
 from __future__ import annotations
 
@@ -40,6 +52,16 @@ def main() -> None:
     args = ap.parse_args()
 
     throttle = args.throttle_ms / 1000.0
+
+    if not generator_core.HAS_SHAPELY:
+        print("Error: Shapely is required for this tool.", file=sys.stderr)
+        sys.exit(1)
+
+    try:
+        import yaml  # noqa: F401
+    except Exception:
+        print("Error: PyYAML is required for color store support.", file=sys.stderr)
+        sys.exit(1)
 
     def log(msg: str) -> None:
         if args.verbose:
