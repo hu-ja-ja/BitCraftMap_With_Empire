@@ -192,16 +192,16 @@ def build_features_from_chunkmap(chunkmap: Dict[Tuple[int, int], Set[Tuple[int, 
       - 所有者セットが空のチャンクは無視する
     """
     features: List[dict] = []
-    for (chunk_x, chunk_y), owners in chunkmap.items():
+    for (chunk_x, chunk_y), owners in sorted(chunkmap.items(), key=lambda kv: (kv[0][0], kv[0][1])):
         coords = chunk_bounds(chunk_x, chunk_y)
         coords_list = _coords_to_feature_polygon(coords)
         if len(owners) == 0:
             continue
         if len(owners) > 1:
-            owner_names = ", ".join(sorted(n for (_, n) in owners))
+            owner_names = ", ".join(sorted((n for (_, n) in owners)))
             props = {"popupText": f"Contested: {owner_names}", "color": "#888888", "fillColor": "#888888", "fillOpacity": 0.2}
         else:
-            empire_id, empire_name = next(iter(owners))
+            empire_id, empire_name = sorted(owners)[0]
             color = COLOR_PALETTE[empire_id % len(COLOR_PALETTE)]
             props = {"popupText": empire_name, "color": color, "fillColor": color, "fillOpacity": 0.4}
         feature = {"type": "Feature", "properties": props, "geometry": {"type": "Polygon", "coordinates": coords_list}}
@@ -234,6 +234,7 @@ def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: 
     """
     chunkmap: Dict[Tuple[int, int], Set[Tuple[int, str]]] = defaultdict(set)
     siege_points: List[dict] = []
+
     def fetch_emp(emp: Tuple[int, str]):
         empire_id, empire_name = emp
         try:
@@ -242,41 +243,56 @@ def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: 
             towers = client.fetch_towers(empire_id)
             fetch_end = time.perf_counter()
             log(f"Fetched {len(towers)} towers for {empire_id} in {fetch_end - fetch_start:.2f}s")
-            return empire_id, empire_name, towers
         except Exception as exc:
             log(f"Failed to fetch towers for {empire_id}: {exc}")
-            return empire_id, empire_name, []
+            towers = []
 
+        local_chunks: List[Tuple[int, int]] = []
+        local_siege: List[dict] = []
+        towers_handled = 0
+        for tower in towers:
+            if args.max_towers_per_empire > 0 and towers_handled >= args.max_towers_per_empire:
+                break
+            if not tower.get("active", True):
+                continue
+            location_x = tower.get("locationX")
+            location_y = tower.get("locationZ")
+            if location_x is None or location_y is None:
+                continue
+            try:
+                if location_x <= 0 or location_y <= 0 or location_x > 23040 or location_y > 23040:
+                    continue
+            except Exception:
+                continue
+            try:
+                small_x = int(location_x)
+                small_y = int(location_y)
+            except Exception:
+                continue
+            for (cx, cy) in _coords.tower_covered_chunks(small_x, small_y, radius_chunks=2):
+                local_chunks.append((cx, cy))
+            towers_handled += 1
+
+        return (empire_id, empire_name, local_chunks, local_siege, towers_handled)
+
+    results = []
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures = {pool.submit(fetch_emp, emp): emp for emp in emps_to_process}
         for fut in as_completed(futures):
-            empire_id, empire_name, towers = fut.result()
-            towers_handled = 0
-            for tower in towers:
-                if args.max_towers_per_empire > 0 and towers_handled >= args.max_towers_per_empire:
-                    break
-                if not tower.get("active", True):
-                    continue
-                location_x = tower.get("locationX")
-                location_y = tower.get("locationZ")
-                if location_x is None or location_y is None:
-                    continue
-                if location_x <= 0 or location_y <= 0 or location_x > 23040 or location_y > 23040:
-                    continue
-                try:
-                    small_x = int(location_x)
-                    small_y = int(location_y)
-                except Exception:
-                    continue
-                for (cx, cy) in _coords.tower_covered_chunks(small_x, small_y, radius_chunks=2):
-                    chunkmap[(cx, cy)].add((empire_id, empire_name))
-                towers_handled += 1
-                approx_features = len(chunkmap) + len(siege_points)
-                if args.max_features > 0 and approx_features >= args.max_features:
-                    log(f"Reached max-features={args.max_features}, stopping early")
-                    break
-            print(f"Processed empire {empire_id} ({empire_name}), towers handled: {towers_handled}")
+            try:
+                res = fut.result()
+            except Exception as exc:
+                log(f"Worker failed: {exc}")
+                continue
+            if res:
+                results.append(res)
             time.sleep(throttle)
+
+    for empire_id, empire_name, local_chunks, local_siege, towers_handled in sorted(results, key=lambda r: (r[0], r[1])):
+        for cx, cy in sorted(set(local_chunks), key=lambda c: (c[0], c[1])):
+            chunkmap[(cx, cy)].add((empire_id, empire_name))
+        siege_points.extend(local_siege)
+        print(f"Processed empire {empire_id} ({empire_name}), towers handled: {towers_handled}")
 
     return chunkmap, siege_points
 
@@ -297,14 +313,14 @@ def build_owner_and_contested_polys(chunkmap, log):
     if not HAS_SHAPELY:
         return owner_polys, contested_polys
     from shapely.geometry import Polygon as _Polygon
-    for (chunk_x, chunk_y), owners in chunkmap.items():
+    for (chunk_x, chunk_y), owners in sorted(chunkmap.items(), key=lambda kv: (kv[0][0], kv[0][1])):
         coords = chunk_bounds(chunk_x, chunk_y)
         try:
             polygon = _Polygon(coords)
         except Exception:
             continue
         if len(owners) == 1:
-            empire_id, empire_name = next(iter(owners))
+            empire_id, empire_name = sorted(owners)[0]
             owner_polys[(empire_id, empire_name)].append(polygon)
         elif len(owners) > 1:
             contested_polys.append(polygon)
@@ -350,7 +366,7 @@ def build_adjacency(merged_owner_geoms, args, log):
       - STRtree の query 結果は環境によって型が異なる（geom オブジェクトや index など）ため
         保守的にハンドリングしている。
     """
-    nodes = list(merged_owner_geoms.keys())
+    nodes = sorted(list(merged_owner_geoms.keys()), key=lambda k: (k[0], k[1]))
     adjacency: Dict[Tuple[int, str], Set[Tuple[int, str]]] = {n: set() for n in nodes}
     log(f"Building adjacency graph for {len(nodes)} owner geometries...")
     t_adj_start = time.perf_counter()
@@ -419,7 +435,6 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
     - 毎回 `name` フィールドは更新する。
     - `color_store_path` が指定されればロード/セーブを行う。
     """
-    # load existing store if provided
     if color_store_path:
         try:
             store = _color_store.load_color_store(color_store_path)
@@ -434,11 +449,8 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
     sorted_nodes = sorted(nodes, key=lambda n: len(adjacency[n]), reverse=True)
     assigned_color: Dict[Tuple[int, str], str] = {}
 
-    # reuse persisted colors when available
     for eid, meta in list(store.items()):
         if meta.get("color"):
-            # meta color expected to be normalized already (helper ensures leading '#')
-            # map persisted by eid -> runtime key (eid,name) is resolved below when iterating nodes
             pass
 
     if verbose:
@@ -451,24 +463,20 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
         except Exception:
             eid_key = empire_id
 
-        # if persisted color exists for this eid, reuse
         persisted = store.get(eid_key)
         if persisted and persisted.get("color") is not None:
             color_val = persisted.get("color")
             if color_val:
                 assigned_color[node_key] = color_val
-            # always update name
             persisted["name"] = empire_name
             if verbose:
                 log(f"Reused stored color for {node_key}: {color_val}")
             continue
 
-        # collect neighbor colors
         used = {assigned_color[n] for n in adjacency[node_key] if n in assigned_color}
         pick = next((c for c in palette if c not in used), palette[0])
         assigned_color[node_key] = pick
 
-        # ensure store has entry
         existing = store.get(eid_key)
         if existing is None:
             store[eid_key] = {"name": empire_name, "color": pick}
@@ -479,7 +487,6 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
         if verbose:
             log(f"Assigned color for {node_key}: {pick} (used around it: {used})")
 
-    # persist back
     if color_store_path:
         try:
             _color_store.save_color_store(color_store_path, store)
@@ -507,7 +514,7 @@ def emit_owner_features(merged_owner_geoms, assigned_color):
     features: List[dict] = []
     if not HAS_SHAPELY:
         return features
-    for owner_key, geom in merged_owner_geoms.items():
+    for owner_key, geom in sorted(merged_owner_geoms.items(), key=lambda kv: (kv[0][0], kv[0][1])):
         try:
             from shapely.geometry import mapping as _mapping
         except Exception:
