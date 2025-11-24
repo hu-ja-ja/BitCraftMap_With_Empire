@@ -1,0 +1,87 @@
+name: Update Gist on GeoJSON change
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Resource/*.geojson'
+
+jobs:
+  update-gist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Update Gist for changed GeoJSON files
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+          BEFORE: ${{ github.event.before }}
+          SHA: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import os, subprocess, json, sys, urllib.request, glob
+
+          before = os.environ.get('BEFORE')
+          sha = os.environ.get('SHA')
+          token = os.environ.get('GIST_TOKEN')
+          gist_id = os.environ.get('GIST_ID')
+
+          if not token or not gist_id:
+              print("GIST_TOKEN or GIST_ID not set; aborting")
+              sys.exit(1)
+
+          changed = []
+          try:
+              if before and not set(before) <= set('0'):
+                  out = subprocess.check_output(['git','diff','--name-only', before, sha, '--', 'Resource/*.geojson'], stderr=subprocess.DEVNULL).decode().splitlines()
+                  changed = [p.strip() for p in out if p.strip()]
+              else:
+                  changed = glob.glob('Resource/*.geojson')
+          except subprocess.CalledProcessError:
+              changed = []
+
+          if not changed:
+              print('No changed Resource/*.geojson files detected.')
+              sys.exit(0)
+
+          files_payload = {}
+          for path in changed:
+              name = os.path.basename(path)
+              try:
+                  with open(path, 'r', encoding='utf-8') as f:
+                      content = f.read()
+              except Exception as e:
+                  print('Failed reading', path, e)
+                  continue
+              files_payload[name] = {"content": content}
+
+          if not files_payload:
+              print('No files to update.')
+              sys.exit(0)
+
+          payload = {"files": files_payload}
+          data = json.dumps(payload).encode('utf-8')
+          req = urllib.request.Request(f"https://api.github.com/gists/{gist_id}", data=data, headers={
+              "Authorization": f"token {token}",
+              "User-Agent": "BitCraftMap_With_Empire",
+              "Content-Type": "application/json",
+          }, method="PATCH")
+
+          try:
+              with urllib.request.urlopen(req) as resp:
+                  resp_data = resp.read().decode()
+                  j = json.loads(resp_data)
+                  print('Gist updated:', j.get('html_url'))
+          except urllib.error.HTTPError as e:
+              print('Gist update failed:', e.code, e.read().decode())
+              sys.exit(1)
+          PY
