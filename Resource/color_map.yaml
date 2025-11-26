@@ -386,7 +386,7 @@
   name: Whisperveil
   color: '#00FFAAff'
 37660:
-  name: The Hunters Association
+  name: Golden Hunters Trading Co
   color: '#AAFF00ff'
 39958:
   name: Purgatory
@@ -497,7 +497,7 @@
   name: WAAAGH
   color: '#FF5500ff'
 293490:
-  name: Aki No Teikoku
+  name: Akihiro
   color: '#FF5500ff'
 296634:
   name: Northern Armies
@@ -560,7 +560,7 @@
   name: Ardyn
   color: '#0088FFff'
 650825:
-  name: 'One Man Kingdom '
+  name: Hiou no Kuni
   color: '#6600FFff'
 693454:
   name: Black Flag
@@ -582,4 +582,13 @@
   color: '#AAFF00ff'
 695136:
   name: The Urglands
+  color: '#00FFAAff'
+551826:
+  name: The Masons Guild
+  color: '#0088FFff'
+374811:
+  name: Nevermore
+  color: '#FF5500ff'
+661229:
+  name: Ventus Magice
   color: '#00FFAAff'
