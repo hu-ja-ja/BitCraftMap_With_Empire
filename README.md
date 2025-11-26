@@ -2,18 +2,19 @@
 
 for [BitCraftMap](https://github.com/bitcraftmap/bitcraftmap)
 
-[Gist](https://gist.github.com/hu-ja-ja/0df91f5827d8bd8ade52d40ce4d5d20d)
+本リポジトリは [BitJita](https://bitjita.com/docs/api) から Empire/Tower のデータを取得し、GeoJSON に変換するツール群を含みます。
 
-[BitCraftMap With Empire](https://bitcraftmap.com/?gistId=0df91f5827d8bd8ade52d40ce4d5d20d)
+### 閲覧方法
 
-このリポジトリは BitJita のエンパイア／塔データを取得し、GeoJSON に変換する小さなツール群を含みます。
+リポジトリは生成された GeoJSON を自動的に [Gist](https://gist.github.com/hu-ja-ja/0df91f5827d8bd8ade52d40ce4d5d20d) にアップロードする GitHub Actions を実行しており、出力は [BitCraftMap](https://bitcraftmap.com/?gistId=0df91f5827d8bd8ade52d40ce4d5d20d) 上で閲覧できます。
 
 ## 前提: uv を使う
 
 このリポジトリは `uv`（Astral のパッケージマネージャ）を使って依存を再現する前提での利用を想定しています。
-公式ドキュメント: [https://docs.astral.sh/uv]
 
-注意: リポジトリに含まれる `uv.lock` に Python の要件が書かれている場合があります（例: `requires-python = ">=3.13"`）。`uv sync` を実行する前にご自身の環境がその要件を満たすか確認してください。満たさない場合は `uv python install <version>` で適切な Python を用意してください。
+[公式ドキュメント](https://docs.astral.sh/uv)
+
+注意: `uv sync` を実行する前にご自身の環境が要件を満たすか確認してください。満たさない場合は `uv python install <version>` で適切な Python を用意してください。
 
 ## すばやく始める（uv 前提）
 
@@ -69,7 +70,7 @@ uv run generate --limit-empires 100 --verbose --out Resource/my.geojson
 
 ## 出力について
 
-- 出力は GeoJSON の FeatureCollection です。既存の `Sample\sample.geojson` と互換性を保つプロパティを付与しています。
+- 出力は GeoJSON の FeatureCollection です。BitCraftMap の[フォーマット](https://github.com/bitcraftmap/bitcraftmap?tab=readme-ov-file#feature--custom-markers) と互換性を保つプロパティを付与しています。
 
 ## 注意点
 
