@@ -2,6 +2,10 @@
 
 for [https://github.com/bitcraftmap/bitcraftmap]
 
+[https://gist.github.com/hu-ja-ja/0df91f5827d8bd8ade52d40ce4d5d20d]
+
+[https://bitcraftmap.com/?gistId=0df91f5827d8bd8ade52d40ce4d5d20d]
+
 このリポジトリは BitJita のエンパイア／塔データを取得し、GeoJSON に変換する小さなツール群を含みます。
 
 ## 前提: uv を使う

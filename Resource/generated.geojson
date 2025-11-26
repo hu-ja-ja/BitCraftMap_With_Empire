@@ -23,8 +23,8 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Ottoadman Empire",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
+        "color": "#ffffffff",
+        "fillColor": "#ffffffff",
         "fillOpacity": 0.2
       },
       "geometry": {
