@@ -1,4 +1,4 @@
-# 未探索エリアの色:文字外枠の色
+# 未探索エリアの色:文字外側の色
 
 #513b3b:#963333ff
 #51413b:#964c33ff
@@ -27,3 +27,18 @@
 #434342:#525252ff:#9e9e9eff
 #3f3f3f:#424242ff:#8e8e8eff
 #3b3b3b:#333333ff:#7f7f7fff
+
+#文字内側の色
+
+#98d9b8ff
+#94d4d4ff
+#94c4d4ff
+#a8baf0ff
+#ddbaffff
+#eebaffff
+#faaffaff
+#ffb3c6ff
+#ffb5b5ff
+#e6c3a1ff
+#e6d5a1ff
+
