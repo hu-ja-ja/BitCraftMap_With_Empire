@@ -199,7 +199,7 @@ def build_features_from_chunkmap(chunkmap: Dict[Tuple[int, int], Set[Tuple[int, 
             continue
         if len(owners) > 1:
             owner_names = ", ".join(sorted((n for (_, n) in owners)))
-            props = {"popupText": f"Contested: {owner_names}", "color": "#888888", "fillColor": "#888888", "fillOpacity": 0.2}
+            props = {"popupText": f"Contested: {owner_names}", "color": "#2d2d2d", "fillColor": "#2d2d2d", "fillOpacity": 0.5}
         else:
             empire_id, empire_name = sorted(owners)[0]
             color = COLOR_PALETTE[empire_id % len(COLOR_PALETTE)]
@@ -527,6 +527,6 @@ def emit_owner_features(merged_owner_geoms, assigned_color):
             continue
         empire_id, empire_name = owner_key
         color = assigned_color.get(owner_key, COLOR_PALETTE[empire_id % len(COLOR_PALETTE)])
-        props = {"popupText": empire_name, "color": color, "fillColor": color, "fillOpacity": 0.2}
+        props = {"popupText": empire_name, "color": color, "fillColor": color, "fillOpacity": 0.4}
         features.append({"type": "Feature", "properties": props, "geometry": geom_json})
     return features

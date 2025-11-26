@@ -23,9 +23,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Ottoadman Empire",
-        "color": "#ffffffff",
-        "fillColor": "#ffffffff",
-        "fillOpacity": 0.2
+        "color": "#206320ff",
+        "fillColor": "#206320ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -1225,9 +1225,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Jaruudian Kingdom",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -2359,9 +2359,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Legion",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -3469,9 +3469,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Royaume de France",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#2c4285ff",
+        "fillColor": "#2c4285ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -4871,9 +4871,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Valeria",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#744d27ff",
+        "fillColor": "#744d27ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -5051,9 +5051,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Umbilica",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#e6d5a1ff",
+        "fillColor": "#e6d5a1ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -5537,9 +5537,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Classis Borealis",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#6241c4ff",
+        "fillColor": "#6241c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -6895,9 +6895,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Tavernhold",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#744d27ff",
+        "fillColor": "#744d27ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -7577,9 +7577,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Odynholm",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -7805,9 +7805,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Yggdrasil",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#3f5e1fff",
+        "fillColor": "#3f5e1fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -9023,9 +9023,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Volkov Trade Company",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -9925,9 +9925,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Sol da Meia Noite",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#e6c3a1ff",
+        "fillColor": "#e6c3a1ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -10427,9 +10427,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Chilling Place",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#7038a8ff",
+        "fillColor": "#7038a8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -10855,9 +10855,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "BitJita",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -11333,9 +11333,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "New Dawn Coalition",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -12369,9 +12369,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Free Cities of Floathaven",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -12605,9 +12605,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Dark Side",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#ddbaffff",
+        "fillColor": "#ddbaffff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -13003,9 +13003,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Eclipse",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#7038a8ff",
+        "fillColor": "#7038a8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -13497,9 +13497,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Realm of Crown and Cask",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -13773,9 +13773,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Veltrassan Federation",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -15411,9 +15411,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Grove",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#206332ff",
+        "fillColor": "#206332ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -15889,9 +15889,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Ratopia",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#9e9e9eff",
+        "fillColor": "#9e9e9eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -16117,9 +16117,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Empire of Nordgaard",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -16905,9 +16905,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Lunaciel",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -17005,9 +17005,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Roman Empire",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -17707,9 +17707,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Hold My Beer",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#e6c3a1ff",
+        "fillColor": "#e6c3a1ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -18169,9 +18169,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Hempire",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#206320ff",
+        "fillColor": "#206320ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -18555,9 +18555,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Phluxian Church",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#746027ff",
+        "fillColor": "#746027ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -18877,9 +18877,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Gallifrey Emporium",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -19153,9 +19153,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Widmoria",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#8e8e8eff",
+        "fillColor": "#8e8e8eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -19333,9 +19333,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Venture Trading Company",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#4141c4ff",
+        "fillColor": "#4141c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -19433,9 +19433,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Wardens",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#2f5e1fff",
+        "fillColor": "#2f5e1fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -19847,9 +19847,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Tidegrove",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -19979,9 +19979,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Crimson Tide",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -20373,9 +20373,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Lands of Mordor",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#e6d5a1ff",
+        "fillColor": "#e6d5a1ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -20513,9 +20513,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "First Light",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#206320ff",
+        "fillColor": "#206320ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -20663,9 +20663,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "ZYNBABWE",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#eebaffff",
+        "fillColor": "#eebaffff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -22979,9 +22979,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Ancient Greece",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -23183,9 +23183,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Holy Bunbun Empire",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#7038a8ff",
+        "fillColor": "#7038a8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -23539,9 +23539,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Solumbris",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#6241c4ff",
+        "fillColor": "#6241c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -24081,9 +24081,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Dragons Maw",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#1f5e5eff",
+        "fillColor": "#1f5e5eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -24261,9 +24261,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Alkahest",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#ccccccff",
+        "fillColor": "#ccccccff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -24385,9 +24385,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Mox",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#cccc8fff",
+        "fillColor": "#cccc8fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -24485,9 +24485,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Imperio de la Luz",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#6241c4ff",
+        "fillColor": "#6241c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -24889,9 +24889,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Die Erbauer",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#6241c4ff",
+        "fillColor": "#6241c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -25253,9 +25253,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Lich Core Dominion",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -25617,9 +25617,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The United States of Bitcraft",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -26591,9 +26591,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Abyss",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -27609,9 +27609,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Collective Braincell",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#6241c4ff",
+        "fillColor": "#6241c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -27909,9 +27909,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Doozer Dome",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#1f5e4fff",
+        "fillColor": "#1f5e4fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -28145,9 +28145,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Towerborne Ecclesium",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -28935,9 +28935,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Golden Jakyls",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#746027ff",
+        "fillColor": "#746027ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -29373,9 +29373,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Dreamless",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -29449,9 +29449,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Coven",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#6241c4ff",
+        "fillColor": "#6241c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -29589,9 +29589,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Vodowls",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#2c4285ff",
+        "fillColor": "#2c4285ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -29899,9 +29899,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Bober Empire",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#913048ff",
+        "fillColor": "#913048ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -30015,9 +30015,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Jura Tempest Federation",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -30195,9 +30195,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Lunar Legion",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#e6d5a1ff",
+        "fillColor": "#e6d5a1ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -30583,9 +30583,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Ashen Empire",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -30997,9 +30997,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Númenor",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#e6d5a1ff",
+        "fillColor": "#e6d5a1ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -32003,9 +32003,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Seabrook",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#206320ff",
+        "fillColor": "#206320ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -32103,9 +32103,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Sweetserland",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#6d41a3ff",
+        "fillColor": "#6d41a3ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -32203,9 +32203,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Saint Empire de Vachy",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#964c33ff",
+        "fillColor": "#964c33ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -32327,9 +32327,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Velmarian Empire",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#744d27ff",
+        "fillColor": "#744d27ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -32467,9 +32467,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Ashenreach",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -32853,9 +32853,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Great Star Ascendancy",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#4141c4ff",
+        "fillColor": "#4141c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -32945,9 +32945,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Lazy Nation",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -33029,9 +33029,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Wyrd",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#6241c4ff",
+        "fillColor": "#6241c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -33153,9 +33153,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Twin Shore Trading",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -33423,9 +33423,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "SAKURA",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#8a2d74ff",
+        "fillColor": "#8a2d74ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -33571,9 +33571,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Emberveil",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#964c33ff",
+        "fillColor": "#964c33ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -33887,9 +33887,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Goyda Federation",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#2c4285ff",
+        "fillColor": "#2c4285ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -33971,9 +33971,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Freeren",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#49571dff",
+        "fillColor": "#49571dff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -34071,9 +34071,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Greywood",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -34163,9 +34163,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Dreadmark Empire",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -34375,9 +34375,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Freakyborea RU",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c4285ff",
+        "fillColor": "#2c4285ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -34467,9 +34467,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "KOTONOE Shrine",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#ffb5b5ff",
+        "fillColor": "#ffb5b5ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -34655,9 +34655,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Cozy Empire",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -34875,9 +34875,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Fintastic Friends",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#2c4285ff",
+        "fillColor": "#2c4285ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -34983,9 +34983,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Kijin Empire",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#2c4285ff",
+        "fillColor": "#2c4285ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -35099,9 +35099,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Buffalo Wild Wings",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#964c33ff",
+        "fillColor": "#964c33ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -35191,9 +35191,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Order of the Mystic White Owl",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#8e8e8eff",
+        "fillColor": "#8e8e8eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -35677,9 +35677,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Hexwater Accord",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#1f4e5eff",
+        "fillColor": "#1f4e5eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -36395,9 +36395,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Apostles of the Shattered Sun",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#98d998ff",
+        "fillColor": "#98d998ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -36831,9 +36831,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Dragons Throat",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#1f4e5eff",
+        "fillColor": "#1f4e5eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -36931,9 +36931,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Empyrelite",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#94d4d4ff",
+        "fillColor": "#94d4d4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -37031,9 +37031,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Ithacan Thalassocracy",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#7038a8ff",
+        "fillColor": "#7038a8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -39177,9 +39177,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Bloodbourne Reach",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#206320ff",
+        "fillColor": "#206320ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -39309,9 +39309,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Mutually Assured Suction",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#7038a8ff",
+        "fillColor": "#7038a8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -39505,9 +39505,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Koyo",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#964c33ff",
+        "fillColor": "#964c33ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -39645,9 +39645,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Nova Roma",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -39905,9 +39905,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Caprica",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#e6c3a1ff",
+        "fillColor": "#e6c3a1ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -40101,9 +40101,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Garden of Thornes",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -40313,9 +40313,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Warsong",
-        "color": "#6600FFff",
-        "fillColor": "#6600FFff",
-        "fillOpacity": 0.2
+        "color": "#4141c4ff",
+        "fillColor": "#4141c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -40461,9 +40461,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Tarot Club",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#7038a8ff",
+        "fillColor": "#7038a8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -40649,9 +40649,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Muppet Dynasty",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#206320ff",
+        "fillColor": "#206320ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -40797,9 +40797,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Buris Rest",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#964c33ff",
+        "fillColor": "#964c33ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -40963,9 +40963,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Karhide",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -41055,9 +41055,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Stormwatch",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#9e9e9eff",
+        "fillColor": "#9e9e9eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -41155,9 +41155,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Its Free Emil Estate",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#1f5e4fff",
+        "fillColor": "#1f5e4fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -41279,9 +41279,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Cossack Hetmanate",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#ffb5b5ff",
+        "fillColor": "#ffb5b5ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -41491,9 +41491,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Norvrandt",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -41953,9 +41953,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Iridescent Institute",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#1f5e4fff",
+        "fillColor": "#1f5e4fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -42093,9 +42093,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Squirrel Kingdom",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#4141c4ff",
+        "fillColor": "#4141c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -42233,9 +42233,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Socializing",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#964c33ff",
+        "fillColor": "#964c33ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -42597,9 +42597,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Kitty Nation",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#4141c4ff",
+        "fillColor": "#4141c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -42697,9 +42697,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Randy Ribbit Ranchers",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -43149,9 +43149,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Daybreak",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#6241c4ff",
+        "fillColor": "#6241c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -43249,9 +43249,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Meow Meows",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#1f5e4fff",
+        "fillColor": "#1f5e4fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -43437,9 +43437,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Hearth",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#964c33ff",
+        "fillColor": "#964c33ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -43561,9 +43561,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Sushi",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#4141c4ff",
+        "fillColor": "#4141c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -43781,9 +43781,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Black Flame",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -43881,9 +43881,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Nothing",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -44375,9 +44375,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Sanctuary",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#9e9e9eff",
+        "fillColor": "#9e9e9eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -44685,9 +44685,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Elpis",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#94c4d4ff",
+        "fillColor": "#94c4d4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -45411,9 +45411,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Rivers Spire",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c4285ff",
+        "fillColor": "#2c4285ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -46493,9 +46493,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Fallen",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -46593,9 +46593,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Wholesomeness",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#8a2d74ff",
+        "fillColor": "#8a2d74ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -47285,9 +47285,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Hamamatsu",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#ffb3c6ff",
+        "fillColor": "#ffb3c6ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -47385,9 +47385,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "BitCraft",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -47575,9 +47575,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Emberleaf Isles",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#964c33ff",
+        "fillColor": "#964c33ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -48075,9 +48075,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Tessathankful",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#744d27ff",
+        "fillColor": "#744d27ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -48769,9 +48769,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Ashforged Kinship",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -48917,9 +48917,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Empire of Valhalla",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#1f4e5eff",
+        "fillColor": "#1f4e5eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -49025,9 +49025,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Moonlight",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -49639,9 +49639,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "DangerVille",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c4285ff",
+        "fillColor": "#2c4285ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -49779,9 +49779,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "BluntBerry Highlands",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#913061ff",
+        "fillColor": "#913061ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -49903,9 +49903,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Whisperveil",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#1f5e5eff",
+        "fillColor": "#1f5e5eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -50867,9 +50867,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Golden Hunters Trading Co",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#8a2d8aff",
+        "fillColor": "#8a2d8aff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -51793,9 +51793,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Purgatory",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#8e8e8eff",
+        "fillColor": "#8e8e8eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -51803,6 +51803,18 @@
           [
             [
               [
+                960.0,
+                480.0
+              ],
+              [
+                864.0,
+                480.0
+              ],
+              [
+                768.0,
+                480.0
+              ],
+              [
                 672.0,
                 480.0
               ],
@@ -52307,20 +52319,60 @@
                 2688.0
               ],
               [
-                2016.0,
+                1920.0,
+                2688.0
+              ],
+              [
+                1824.0,
+                2688.0
+              ],
+              [
+                1728.0,
+                2688.0
+              ],
+              [
+                1632.0,
+                2688.0
+              ],
+              [
+                1536.0,
+                2688.0
+              ],
+              [
+                1536.0,
                 2592.0
               ],
               [
-                2016.0,
+                1536.0,
                 2496.0
               ],
               [
-                2016.0,
+                1536.0,
                 2400.0
               ],
               [
-                2016.0,
+                1536.0,
                 2304.0
+              ],
+              [
+                1536.0,
+                2208.0
+              ],
+              [
+                1632.0,
+                2208.0
+              ],
+              [
+                1728.0,
+                2208.0
+              ],
+              [
+                1824.0,
+                2208.0
+              ],
+              [
+                1920.0,
+                2208.0
               ],
               [
                 2016.0,
@@ -52472,18 +52524,6 @@
               ],
               [
                 960.0,
-                480.0
-              ],
-              [
-                864.0,
-                480.0
-              ],
-              [
-                768.0,
-                480.0
-              ],
-              [
-                672.0,
                 480.0
               ]
             ],
@@ -52546,22 +52586,6 @@
             [
               [
                 3360.0,
-                1440.0
-              ],
-              [
-                3360.0,
-                1536.0
-              ],
-              [
-                3360.0,
-                1632.0
-              ],
-              [
-                3360.0,
-                1728.0
-              ],
-              [
-                3360.0,
                 1824.0
               ],
               [
@@ -52723,11 +52747,43 @@
               [
                 3360.0,
                 1440.0
+              ],
+              [
+                3360.0,
+                1536.0
+              ],
+              [
+                3360.0,
+                1632.0
+              ],
+              [
+                3360.0,
+                1728.0
+              ],
+              [
+                3360.0,
+                1824.0
               ]
             ]
           ],
           [
             [
+              [
+                5568.0,
+                2208.0
+              ],
+              [
+                5568.0,
+                2304.0
+              ],
+              [
+                5568.0,
+                2400.0
+              ],
+              [
+                5568.0,
+                2496.0
+              ],
               [
                 5568.0,
                 2592.0
@@ -52787,27 +52843,15 @@
               [
                 5568.0,
                 2208.0
-              ],
-              [
-                5568.0,
-                2304.0
-              ],
-              [
-                5568.0,
-                2400.0
-              ],
-              [
-                5568.0,
-                2496.0
-              ],
-              [
-                5568.0,
-                2592.0
               ]
             ]
           ],
           [
             [
+              [
+                7008.0,
+                2880.0
+              ],
               [
                 7008.0,
                 2976.0
@@ -52911,10 +52955,6 @@
               [
                 7008.0,
                 2880.0
-              ],
-              [
-                7008.0,
-                2976.0
               ]
             ]
           ]
@@ -52925,9 +52965,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Chaos Expanse",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#7038a8ff",
+        "fillColor": "#7038a8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -53795,9 +53835,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Starborne",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#98d9b8ff",
+        "fillColor": "#98d9b8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -54319,9 +54359,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Tsunami",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#ffb5b5ff",
+        "fillColor": "#ffb5b5ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -54747,9 +54787,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Peachridge",
-        "color": "#6600FFff",
-        "fillColor": "#6600FFff",
-        "fillOpacity": 0.2
+        "color": "#7038a8ff",
+        "fillColor": "#7038a8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -55113,9 +55153,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Kingdom of Ithaca",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c4285ff",
+        "fillColor": "#2c4285ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -55383,7 +55423,7 @@
         "popupText": "Vanaheimr",
         "color": "#6600FFff",
         "fillColor": "#6600FFff",
-        "fillOpacity": 0.2
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -55697,9 +55737,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Odynskogr",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#744d27ff",
+        "fillColor": "#744d27ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -55885,9 +55925,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "SALT",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#8e8e8eff",
+        "fillColor": "#8e8e8eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -56993,9 +57033,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Mechanus",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#2c4285ff",
+        "fillColor": "#2c4285ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -57355,9 +57395,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Nebula",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#94c4d4ff",
+        "fillColor": "#94c4d4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -57567,9 +57607,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Snowfall",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -57643,9 +57683,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Holy Order of the Crimson Cross",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -57897,9 +57937,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Kalos Region",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#964c33ff",
+        "fillColor": "#964c33ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -57965,9 +58005,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Grand Commerce Authority",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#e6d5a1ff",
+        "fillColor": "#e6d5a1ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -58057,9 +58097,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Church of Shrek",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#206320ff",
+        "fillColor": "#206320ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -58471,9 +58511,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Celestia",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#1f4e5eff",
+        "fillColor": "#1f4e5eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -58571,9 +58611,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Unta",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -58825,9 +58865,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Gran Pulse",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#913048ff",
+        "fillColor": "#913048ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -58917,9 +58957,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Gingerism",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#964c33ff",
+        "fillColor": "#964c33ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -59585,9 +59625,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Kame Kartel",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -59701,9 +59741,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Shirelands",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#ccccccff",
+        "fillColor": "#ccccccff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -59985,9 +60025,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Amberwake",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -60125,9 +60165,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Casuals",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -60537,9 +60577,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Rattopia",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#7038a8ff",
+        "fillColor": "#7038a8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -60637,9 +60677,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Heartspire",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -60809,9 +60849,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Terra",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#746027ff",
+        "fillColor": "#746027ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -61013,9 +61053,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Tub City",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#744d27ff",
+        "fillColor": "#744d27ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -61153,9 +61193,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Pits Are Broken",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#8e8e8eff",
+        "fillColor": "#8e8e8eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -62407,9 +62447,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "GUNMA",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#7038a8ff",
+        "fillColor": "#7038a8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -62827,9 +62867,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Lunaris",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#faaffaff",
+        "fillColor": "#faaffaff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -62919,9 +62959,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Sinnoh",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -63125,9 +63165,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Travelling Witches",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#206320ff",
+        "fillColor": "#206320ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -63225,9 +63265,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "WAAAGH",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -63333,9 +63373,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Akihiro",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#964c33ff",
+        "fillColor": "#964c33ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -63619,9 +63659,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Atlanta",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#913048ff",
+        "fillColor": "#913048ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -63719,9 +63759,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Penumbra",
-        "color": "#6600FFff",
-        "fillColor": "#6600FFff",
-        "fillOpacity": 0.2
+        "color": "#a8baf0ff",
+        "fillColor": "#a8baf0ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -64037,9 +64077,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Mika",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#6241c4ff",
+        "fillColor": "#6241c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -64177,9 +64217,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Twilight Burrows",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#1f4e5eff",
+        "fillColor": "#1f4e5eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -64365,9 +64405,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Hope",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#4141c4ff",
+        "fillColor": "#4141c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -64457,9 +64497,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Khorne",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -64573,9 +64613,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Fallen Divinity",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#9e9e9eff",
+        "fillColor": "#9e9e9eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -64665,9 +64705,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Driftwood",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -65093,9 +65133,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Bunnyhaven",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#6241c4ff",
+        "fillColor": "#6241c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -65193,9 +65233,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Nevermore",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -65253,9 +65293,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "BlackHeart",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#a8baf0ff",
+        "fillColor": "#a8baf0ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -65435,9 +65475,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Oceansky",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#8a2d74ff",
+        "fillColor": "#8a2d74ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -65535,9 +65575,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Riverlands",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#2c5885ff",
+        "fillColor": "#2c5885ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -65683,9 +65723,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Sanity Limited",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#adadadff",
+        "fillColor": "#adadadff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -65889,9 +65929,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Kingdom of Misthalin",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#faaffaff",
+        "fillColor": "#faaffaff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -66485,9 +66525,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Lunisia",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#ccccccff",
+        "fillColor": "#ccccccff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -66761,9 +66801,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Dusty Corner",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#6241c4ff",
+        "fillColor": "#6241c4ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -66853,9 +66893,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "What The Forge",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#746027ff",
+        "fillColor": "#746027ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -66969,9 +67009,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Masons Guild",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#963333ff",
+        "fillColor": "#963333ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -67053,9 +67093,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Euphoria",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#964c33ff",
+        "fillColor": "#964c33ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -67193,9 +67233,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Ardyn",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#8e8e8eff",
+        "fillColor": "#8e8e8eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -67261,9 +67301,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Hiou no Kuni",
-        "color": "#6600FFff",
-        "fillColor": "#6600FFff",
-        "fillOpacity": 0.2
+        "color": "#ffb5b5ff",
+        "fillColor": "#ffb5b5ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -67755,9 +67795,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Ventus Magice",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#1f4e5eff",
+        "fillColor": "#1f4e5eff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -67839,9 +67879,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Black Flag",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#7f7f7fff",
+        "fillColor": "#7f7f7fff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -67939,9 +67979,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "The Urglands",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#49571dff",
+        "fillColor": "#49571dff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -68039,9 +68079,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Hickoria",
-        "color": "#0088FFff",
-        "fillColor": "#0088FFff",
-        "fillOpacity": 0.2
+        "color": "#faafe7ff",
+        "fillColor": "#faafe7ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -68179,9 +68219,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Sanctuary of Sages",
-        "color": "#00FFAAff",
-        "fillColor": "#00FFAAff",
-        "fillOpacity": 0.2
+        "color": "#8c38a8ff",
+        "fillColor": "#8c38a8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -68303,9 +68343,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Italian colonial empire",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#7038a8ff",
+        "fillColor": "#7038a8ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -68427,9 +68467,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Fintland",
-        "color": "#FF5500ff",
-        "fillColor": "#FF5500ff",
-        "fillOpacity": 0.2
+        "color": "#2c4285ff",
+        "fillColor": "#2c4285ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -68527,9 +68567,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Ðiscombobulated",
-        "color": "#AAFF00ff",
-        "fillColor": "#AAFF00ff",
-        "fillOpacity": 0.2
+        "color": "#744d27ff",
+        "fillColor": "#744d27ff",
+        "fillOpacity": 0.4
       },
       "geometry": {
         "type": "Polygon",
@@ -68627,9 +68667,9 @@
       "type": "Feature",
       "properties": {
         "popupText": "Contested",
-        "color": "#888888",
-        "fillColor": "#888888",
-        "fillOpacity": 0.4
+        "color": "#2d2d2d",
+        "fillColor": "#2d2d2d",
+        "fillOpacity": 0.7
       },
       "geometry": {
         "type": "MultiPolygon",

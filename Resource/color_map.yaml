@@ -15,7 +15,7 @@
   color: '#744d27ff'
 540:
   name: Umbilica
-  color: '#333333ff'
+  color: '#e6d5a1ff'
 620:
   name: Classis Borealis
   color: '#6241c4ff'
@@ -33,7 +33,7 @@
   color: '#2c5885ff'
 1262:
   name: Sol da Meia Noite
-  color: '#333333ff'
+  color: '#e6c3a1ff'
 1605:
   name: Chilling Place
   color: '#7038a8ff'
@@ -48,7 +48,7 @@
   color: '#2c5885ff'
 2222:
   name: The Dark Side
-  color: '#424242ff'
+  color: '#ddbaffff'
 2291:
   name: Eclipse
   color: '#7038a8ff'
@@ -63,7 +63,7 @@
   color: '#206332ff'
 3504:
   name: Ratopia
-  color: '#525252ff'
+  color: '#9e9e9eff'
 3671:
   name: The Empire of Nordgaard
   color: '#963333ff'
@@ -75,7 +75,7 @@
   color: '#963333ff'
 3816:
   name: Hold My Beer
-  color: '#333333ff'
+  color: '#e6c3a1ff'
 3959:
   name: The Hempire
   color: '#206320ff'
@@ -87,7 +87,7 @@
   color: '#2c5885ff'
 4460:
   name: Widmoria
-  color: '#424242ff'
+  color: '#8e8e8eff'
 4580:
   name: Venture Trading Company
   color: '#4141c4ff'
@@ -102,13 +102,13 @@
   color: '#963333ff'
 5537:
   name: The Lands of Mordor
-  color: '#333333ff'
+  color: '#e6d5a1ff'
 5617:
   name: First Light
   color: '#206320ff'
 5677:
   name: ZYNBABWE
-  color: '#333333ff'
+  color: '#eebaffff'
 5716:
   name: Ancient Greece
   color: '#2c5885ff'
@@ -123,10 +123,10 @@
   color: '#1f5e5eff'
 6219:
   name: Alkahest
-  color: '#808080ff'
+  color: '#ccccccff'
 6290:
   name: Mox
-  color: '#333333ff'
+  color: '#cccc8fff'
 6534:
   name: Imperio de la Luz
   color: '#6241c4ff'
@@ -135,13 +135,13 @@
   color: '#6241c4ff'
 7549:
   name: Lich Core Dominion
-  color: '#333333ff'
+  color: '#7f7f7fff'
 8072:
   name: The United States of Bitcraft
   color: '#963333ff'
 8234:
   name: The Abyss
-  color: '#333333ff'
+  color: '#7f7f7fff'
 8580:
   name: Collective Braincell
   color: '#6241c4ff'
@@ -156,7 +156,7 @@
   color: '#746027ff'
 9128:
   name: Dreamless
-  color: '#333333ff'
+  color: '#7f7f7fff'
 9175:
   name: The Coven
   color: '#6241c4ff'
@@ -168,16 +168,16 @@
   color: '#913048ff'
 9829:
   name: Jura Tempest Federation
-  color: '#333333ff'
+  color: '#7f7f7fff'
 9867:
   name: Lunar Legion
-  color: '#525252ff'
+  color: '#e6d5a1ff'
 10023:
   name: The Ashen Empire
   color: '#963333ff'
 10197:
   name: Númenor
-  color: '#333333ff'
+  color: '#e6d5a1ff'
 10290:
   name: Seabrook
   color: '#206320ff'
@@ -198,13 +198,13 @@
   color: '#4141c4ff'
 11902:
   name: Lazy Nation
-  color: '#333333ff'
+  color: '#7f7f7fff'
 12103:
   name: The Wyrd
   color: '#6241c4ff'
 12223:
   name: Twin Shore Trading
-  color: '#333333ff'
+  color: '#7f7f7fff'
 12242:
   name: SAKURA
   color: '#8a2d74ff'
@@ -222,13 +222,13 @@
   color: '#2c5885ff'
 13227:
   name: Dreadmark Empire
-  color: '#333333ff'
+  color: '#7f7f7fff'
 13285:
   name: Freakyborea RU
   color: '#2c4285ff'
 13438:
   name: KOTONOE Shrine
-  color: '#525252ff'
+  color: '#ffb5b5ff'
 14611:
   name: The Cozy Empire
   color: '#963333ff'
@@ -243,19 +243,19 @@
   color: '#964c33ff'
 15715:
   name: Order of the Mystic White Owl
-  color: '#424242ff'
+  color: '#8e8e8eff'
 15741:
   name: Hexwater Accord
   color: '#1f4e5eff'
 15837:
   name: Apostles of the Shattered Sun
-  color: '#333333ff'
+  color: '#98d998ff'
 16389:
   name: Dragons Throat
   color: '#1f4e5eff'
 16503:
   name: Empyrelite
-  color: '#424242ff'
+  color: '#94d4d4ff'
 16578:
   name: Ithacan Thalassocracy
   color: '#7038a8ff'
@@ -273,7 +273,7 @@
   color: '#963333ff'
 17506:
   name: Caprica
-  color: '#424242ff'
+  color: '#e6c3a1ff'
 17558:
   name: Garden of Thornes
   color: '#963333ff'
@@ -291,16 +291,16 @@
   color: '#964c33ff'
 18660:
   name: Karhide
-  color: '#333333ff'
+  color: '#7f7f7fff'
 19501:
   name: Stormwatch
-  color: '#525252ff'
+  color: '#9e9e9eff'
 20364:
   name: Its Free Emil Estate
   color: '#1f5e4fff'
 20819:
   name: Cossack Hetmanate
-  color: '#424242ff'
+  color: '#ffb5b5ff'
 20971:
   name: Norvrandt
   color: '#2c5885ff'
@@ -333,28 +333,28 @@
   color: '#4141c4ff'
 26869:
   name: Black Flame
-  color: '#333333ff'
+  color: '#7f7f7fff'
 27309:
   name: Nothing
-  color: '#333333ff'
+  color: '#7f7f7fff'
 28472:
   name: Sanctuary
-  color: '#525252ff'
+  color: '#9e9e9eff'
 29424:
   name: Elpis
-  color: '#616161ff'
+  color: '#94c4d4ff'
 29684:
   name: Rivers Spire
   color: '#2c4285ff'
 30433:
   name: The Fallen
-  color: '#333333ff'
+  color: '#7f7f7fff'
 30688:
   name: Wholesomeness
   color: '#8a2d74ff'
 31342:
   name: Hamamatsu
-  color: '#333333ff'
+  color: '#ffb3c6ff'
 32052:
   name: BitCraft
   color: '#2c5885ff'
@@ -387,16 +387,16 @@
   color: '#8a2d8aff'
 39958:
   name: Purgatory
-  color: '#424242ff'
+  color: '#8e8e8eff'
 40948:
   name: Chaos Expanse
   color: '#7038a8ff'
 41397:
   name: Starborne
-  color: '#616161ff'
+  color: '#98d9b8ff'
 41713:
   name: Tsunami
-  color: '#333333ff'
+  color: '#ffb5b5ff'
 44258:
   name: Peachridge
   color: '#7038a8ff'
@@ -411,13 +411,13 @@
   color: '#744d27ff'
 45838:
   name: SALT
-  color: '#424242ff'
+  color: '#8e8e8eff'
 45971:
   name: Mechanus
   color: '#2c4285ff'
 46519:
   name: Nebula
-  color: '#808080ff'
+  color: '#94c4d4ff'
 48118:
   name: Snowfall
   color: '#2c5885ff'
@@ -429,7 +429,7 @@
   color: '#964c33ff'
 60919:
   name: The Grand Commerce Authority
-  color: '#333333ff'
+  color: '#e6d5a1ff'
 65437:
   name: The Church of Shrek
   color: '#206320ff'
@@ -450,7 +450,7 @@
   color: '#2c5885ff'
 122162:
   name: The Shirelands
-  color: '#808080ff'
+  color: '#ccccccff'
 140583:
   name: Amberwake
   color: '#963333ff'
@@ -471,13 +471,13 @@
   color: '#744d27ff'
 212837:
   name: The Pits Are Broken
-  color: '#424242ff'
+  color: '#8e8e8eff'
 224117:
   name: GUNMA
   color: '#7038a8ff'
 230245:
   name: Lunaris
-  color: '#333333ff'
+  color: '#faaffaff'
 252085:
   name: Sinnoh
   color: '#963333ff'
@@ -486,7 +486,7 @@
   color: '#206320ff'
 259911:
   name: WAAAGH
-  color: '#333333ff'
+  color: '#7f7f7fff'
 293490:
   name: Akihiro
   color: '#964c33ff'
@@ -495,7 +495,7 @@
   color: '#913048ff'
 312318:
   name: Penumbra
-  color: '#333333ff'
+  color: '#a8baf0ff'
 319008:
   name: Mika
   color: '#6241c4ff'
@@ -510,7 +510,7 @@
   color: '#963333ff'
 341390:
   name: Fallen Divinity
-  color: '#525252ff'
+  color: '#9e9e9eff'
 349827:
   name: Driftwood
   color: '#2c5885ff'
@@ -519,7 +519,7 @@
   color: '#6241c4ff'
 378123:
   name: BlackHeart
-  color: '#333333ff'
+  color: '#a8baf0ff'
 382406:
   name: Oceansky
   color: '#8a2d74ff'
@@ -528,13 +528,13 @@
   color: '#2c5885ff'
 401982:
   name: Sanity Limited
-  color: '#616161ff'
+  color: '#adadadff'
 414781:
   name: Kingdom of Misthalin
-  color: '#333333ff'
+  color: '#faaffaff'
 427405:
   name: Lunisia
-  color: '#808080ff'
+  color: '#ccccccff'
 472468:
   name: Dusty Corner
   color: '#6241c4ff'
@@ -546,16 +546,16 @@
   color: '#964c33ff'
 624986:
   name: Ardyn
-  color: '#424242ff'
+  color: '#8e8e8eff'
 650825:
   name: Hiou no Kuni
-  color: '#525252ff'
+  color: '#ffb5b5ff'
 693454:
   name: Black Flag
-  color: '#333333ff'
+  color: '#7f7f7fff'
 779850:
   name: Hickoria
-  color: '#616161ff'
+  color: '#faafe7ff'
 791760:
   name: Sanctuary of Sages
   color: '#8c38a8ff'
@@ -577,3 +577,6 @@
 661229:
   name: Ventus Magice
   color: '#1f4e5eff'
+374811:
+  name: Nevermore
+  color: '#963333ff'
