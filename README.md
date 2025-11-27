@@ -4,7 +4,7 @@ for [BitCraftMap](https://github.com/bitcraftmap/bitcraftmap)
 
 本リポジトリは [BitJita](https://bitjita.com/docs/api) から Empire/Tower のデータを取得し、GeoJSON に変換するツール群を含みます。
 
-### 閲覧方法
+<h3>閲覧方法</h3>
 
 リポジトリは生成された GeoJSON を自動的に [Gist](https://gist.github.com/hu-ja-ja/0df91f5827d8bd8ade52d40ce4d5d20d) にアップロードする GitHub Actions を実行しており、出力は [BitCraftMap](https://bitcraftmap.com/?gistId=0df91f5827d8bd8ade52d40ce4d5d20d) 上で閲覧できます。
 

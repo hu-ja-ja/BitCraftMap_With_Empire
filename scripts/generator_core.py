@@ -70,6 +70,9 @@ COLOR_PALETTE = [
     "#FF0099ff",
 ]
 
+CONTESTED_COLOR = "#2d2d2d"
+CONTESTED_FILL_OPACITY = 0.5
+OWNER_FILL_OPACITY = 0.4
 
 class RateLimiter:
     """トークンバケット方式の簡易レートリミッタ。
@@ -199,11 +202,11 @@ def build_features_from_chunkmap(chunkmap: Dict[Tuple[int, int], Set[Tuple[int, 
             continue
         if len(owners) > 1:
             owner_names = ", ".join(sorted((n for (_, n) in owners)))
-            props = {"popupText": f"Contested: {owner_names}", "color": "#2d2d2d", "fillColor": "#2d2d2d", "fillOpacity": 0.5}
+            props = {"popupText": f"Contested: {owner_names}", "color": CONTESTED_COLOR, "fillColor": CONTESTED_COLOR, "fillOpacity": CONTESTED_FILL_OPACITY}
         else:
             empire_id, empire_name = sorted(owners)[0]
             color = COLOR_PALETTE[empire_id % len(COLOR_PALETTE)]
-            props = {"popupText": empire_name, "color": color, "fillColor": color, "fillOpacity": 0.4}
+            props = {"popupText": empire_name, "color": color, "fillColor": color, "fillOpacity": OWNER_FILL_OPACITY}
         feature = {"type": "Feature", "properties": props, "geometry": {"type": "Polygon", "coordinates": coords_list}}
         features.append(feature)
     return features
@@ -527,6 +530,6 @@ def emit_owner_features(merged_owner_geoms, assigned_color):
             continue
         empire_id, empire_name = owner_key
         color = assigned_color.get(owner_key, COLOR_PALETTE[empire_id % len(COLOR_PALETTE)])
-        props = {"popupText": empire_name, "color": color, "fillColor": color, "fillOpacity": 0.4}
+        props = {"popupText": empire_name, "color": color, "fillColor": color, "fillOpacity": OWNER_FILL_OPACITY}
         features.append({"type": "Feature", "properties": props, "geometry": geom_json})
     return features

@@ -110,7 +110,7 @@ def main() -> None:
                 merged_contested = None
             if merged_contested is not None:
                 geom = generator_core.shapely_mapping(merged_contested)
-                props = {"popupText": "Contested", "color": "#2d2d2d", "fillColor": "#2d2d2d", "fillOpacity": 0.5}
+                props = {"popupText": "Contested", "color": generator_core.CONTESTED_COLOR, "fillColor": generator_core.CONTESTED_COLOR, "fillOpacity": generator_core.CONTESTED_FILL_OPACITY}
                 features.append({"type": "Feature", "properties": props, "geometry": geom})
     else:
         print("Warning: shapely not available — output will contain one polygon per chunk (no merging). Install shapely for merged polygons.")
