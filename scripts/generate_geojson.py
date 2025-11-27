@@ -119,7 +119,8 @@ def main() -> None:
     layer_off = {
         "type": "Feature",
         "properties": {
-            "popupText": "^-^",
+            "popupText": ["Repository is here.", "https://github.com/hu-ja-ja/BitCraftMap_With_Empire"],
+            "iconName": "Hex_Logo",
             "turnLayerOff": ["ruinedLayer", "treesLayer", "templesLayer"]
         },
         "geometry": {
