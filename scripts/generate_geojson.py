@@ -147,13 +147,71 @@ def main() -> None:
 
         debug(f"Finished fetching empire details: success={success}, failed={failed}")
 
+    # --- Prefetch top-tier claims (200) to reduce per-claim API calls ---
+    claims_map = {}
+    try:
+        prefetch_pages = [1, 2, 3]
+        fetched = 0
+        debug("Prefetching top-tier claims pages...")
+        for p in prefetch_pages:
+            claims_page = client.fetch_claims_page(sort="tier", limit=100, page=p)
+            if not isinstance(claims_page, list):
+                continue
+            for c in claims_page:
+                eid_raw = c.get("entityId")
+                if eid_raw is None:
+                    continue
+                try:
+                    cid = int(eid_raw)
+                except Exception:
+                    cid = str(eid_raw)
+                claims_map[cid] = c
+                fetched += 1
+            time.sleep(throttle)
+        debug(f"Prefetched {fetched} claims from top-tier pages")
+    except Exception:
+        debug("Failed to prefetch top-tier claims")
+
+    # Collect capitalClaimIds that need lookup, then fetch missing ones individually
+    capital_ids_needed = set()
+    for info in empire_info.values():
+        try:
+            capid = info.get("capitalClaimId")
+        except Exception:
+            capid = None
+        if capid:
+            try:
+                capital_ids_needed.add(int(capid))
+            except Exception:
+                capital_ids_needed.add(capid)
+
+    # Remove those already found in prefetch
+    remaining = [cid for cid in capital_ids_needed if cid not in claims_map]
+    if remaining:
+        debug(f"Fetching {len(remaining)} individual claim(s) not covered by prefetch...")
+        for idx, cid in enumerate(sorted(remaining, key=lambda x: int(x) if isinstance(x, (int, str)) and str(x).isdigit() else str(x)), start=1):
+            debug(f"Fetching claim ({idx}/{len(remaining)}): {cid}")
+            try:
+                claim = client.fetch_claim(cid)
+            except Exception as exc:
+                debug(f"Failed to fetch claim {cid}: {exc}")
+                claim = {}
+            if claim and isinstance(claim, dict):
+                try:
+                    key = int(cid)
+                except Exception:
+                    key = str(cid)
+                claims_map[key] = claim
+            time.sleep(throttle)
+        debug(f"Finished fetching individual claims: now have {len(claims_map)} claims in map")
+
     features = []
     if generator_core.HAS_SHAPELY:
         owner_polys, contested_polys = generator_core.build_owner_and_contested_polys(chunkmap, log)
         merged = generator_core.merge_owner_geometries(owner_polys, log)
         adjacency = generator_core.build_adjacency(merged, args, log)
         assigned = generator_core.greedy_coloring(adjacency, generator_core.COLOR_PALETTE, log, args.verbose, args.color_store)
-        features.extend(generator_core.emit_owner_features(merged, assigned, empire_info))
+        features.extend(generator_core.emit_owner_features(merged, assigned, empire_info, claims_map))
         if contested_polys:
             try:
                 merged_contested = generator_core.unary_union(contested_polys)

@@ -193,6 +193,45 @@ class BitJitaClient:
         except Exception:
             return {}
 
+    def fetch_claim(self, claim_id: int) -> dict:
+        """Fetch a single claim by id from /api/claims/{id}.
+
+        Returns claim dict or empty dict on error.
+        """
+        url = f"{BASE_URL}/api/claims/{claim_id}"
+        try:
+            response = _get_with_retries(self.session, url, self.limiter, headers={"User-Agent": self.user_agent})
+            if response is None:
+                return {}
+            data = response.json()
+            # API may return the claim object directly or wrapped; try to normalize
+            if isinstance(data, dict) and data.get("claim") is not None:
+                return data.get("claim") or {}
+            if isinstance(data, dict) and data.get("entityId") is not None:
+                return data
+            return {}
+        except Exception:
+            return {}
+
+    def fetch_claims_page(self, sort: str = "tier", limit: int = 100, page: int = 1) -> List[dict]:
+        """Fetch a page of claims from /api/claims with sorting/paging.
+
+        Returns list of claim dicts (may be empty on error).
+        """
+        url = f"{BASE_URL}/api/claims?sort={sort}&limit={limit}&page={page}"
+        try:
+            response = _get_with_retries(self.session, url, self.limiter, headers={"User-Agent": self.user_agent})
+            if response is None:
+                return []
+            data = response.json()
+            if isinstance(data, dict) and data.get("claims") is not None:
+                return data.get("claims") or []
+            if isinstance(data, list):
+                return data
+            return []
+        except Exception:
+            return []
+
 
 smallhex_to_chunk = _coords.smallhex_to_chunk
 chunk_bounds = _coords.chunk_bounds
@@ -525,7 +564,7 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
     return assigned_color
 
 
-def emit_owner_features(merged_owner_geoms, assigned_color, empire_info: dict | None = None):
+def emit_owner_features(merged_owner_geoms, assigned_color, empire_info: dict | None = None, claims_map: dict | None = None):
     """マージ済みジオメトリと色割り当てから GeoJSON Feature を生成する。
 
     入力:
@@ -556,7 +595,7 @@ def emit_owner_features(merged_owner_geoms, assigned_color, empire_info: dict | 
         empire_id, empire_name = owner_key
         color = assigned_color.get(owner_key, COLOR_PALETTE[empire_id % len(COLOR_PALETTE)])
 
-        popup = [empire_name, "", "", ""]
+        popup = [empire_name, "", "", "", ""]
         info = None
         if empire_info is not None:
             try:
@@ -569,20 +608,60 @@ def emit_owner_features(merged_owner_geoms, assigned_color, empire_info: dict | 
         if info:
             cap_name = info.get("capitalClaimName")
             cap_region = info.get("capitalRegionId")
-            if cap_name or cap_region is not None:
-                try:
-                    popup[2] = f"Capital : {cap_name} (R{cap_region})"
-                except Exception:
+
+            # Tier: try to lookup via claims_map using capitalClaimId
+            tier_val = None
+            try:
+                cap_id = info.get("capitalClaimId")
+                if cap_id is not None and claims_map is not None:
+                    try:
+                        claim_key = int(cap_id)
+                    except Exception:
+                        claim_key = str(cap_id)
+                    claim = claims_map.get(claim_key)
+                    if not claim and isinstance(claim_key, str):
+                        try:
+                            claim = claims_map.get(int(claim_key))
+                        except Exception:
+                            claim = None
+                    if claim and isinstance(claim, dict):
+                        tier_val = claim.get("tier")
+            except Exception:
+                tier_val = None
+
+            # Capital line: include tier if available as (T{tier})
+            try:
+                if cap_name:
+                    if tier_val is not None:
+                        popup[2] = f"Capital : {cap_name} (T{tier_val})"
+                    else:
+                        popup[2] = f"Capital : {cap_name}"
+                else:
                     popup[2] = ""
+            except Exception:
+                popup[2] = ""
+
+            # Region line
+            try:
+                if cap_region is not None:
+                    popup[3] = f"Region : {cap_region}"
+                else:
+                    popup[3] = ""
+            except Exception:
+                popup[3] = ""
+
+            # Location line
             lx = info.get("locationX")
             lz = info.get("locationZ")
             try:
                 if lx is not None and lz is not None:
                     e = round(float(lx) / 3.0)
                     n = round(float(lz) / 3.0)
-                    popup[3] = f"Location : N {n} E {e}"
+                    popup[4] = f"Location : N {n} E {e}"
+                else:
+                    popup[4] = ""
             except Exception:
-                pass
+                popup[4] = ""
         else:
             popup = [empire_name]
 
