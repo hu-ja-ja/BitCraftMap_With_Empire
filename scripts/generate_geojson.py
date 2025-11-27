@@ -45,7 +45,7 @@ def main() -> None:
     ap.add_argument("--max-features", type=int, default=0, help="Stop after this many output features (0 = no limit)")
     ap.add_argument("--max-towers-per-empire", type=int, default=0, help="Limit towers processed per empire (0 = no limit)")
     ap.add_argument("--rate-per-min", type=int, default=100, help="Allowed API requests per minute (token-bucket)")
-    ap.add_argument("--workers", type=int, default=8, help="Number of threads to use for parallel tower fetching")
+    ap.add_argument("--workers", type=int, default=4, help="Number of threads to use for parallel tower fetching")
     ap.add_argument("--verbose", action="store_true", help="Enable verbose logging for debugging and progress")
     ap.add_argument("--force-pairwise", action="store_true", help="Disable STRtree and force pairwise adjacency checks (debug)")
     ap.add_argument("--color-store", default="Resource/color_map.yaml", help="Path to YAML color store for entityId->color mapping")
@@ -64,6 +64,10 @@ def main() -> None:
         sys.exit(1)
 
     def log(msg: str) -> None:
+        ts = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        print(f"[{ts}] {msg}", flush=True)
+
+    def debug(msg: str) -> None:
         if args.verbose:
             ts = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             print(f"[{ts}] {msg}", flush=True)
@@ -96,13 +100,60 @@ def main() -> None:
 
     chunkmap, siege_points = generator_core.process_empires_to_chunkmap(emps_to_process, client, args, throttle, log)
 
+    empire_info = {}
+    owner_ids = set()
+    for owners in chunkmap.values():
+        for owner in owners:
+            try:
+                owner_ids.add(int(owner[0]))
+            except Exception:
+                try:
+                    owner_ids.add(owner[0])
+                except Exception:
+                    continue
+    if owner_ids:
+        total = len(owner_ids)
+        debug(f"Fetching details for {total} owning empires...")
+        success = 0
+        failed = 0
+        sorted_ids = sorted(owner_ids, key=lambda x: int(x) if isinstance(x, (int, str)) and str(x).isdigit() else str(x))
+        for idx, eid in enumerate(sorted_ids, start=1):
+            debug(f"Fetching empire details ({idx}/{total}): {eid}")
+            try:
+                detail = client.fetch_empire(eid)
+            except Exception as exc:
+                debug(f"Failed to fetch empire {eid}: {exc}")
+                failed += 1
+                detail = {}
+
+            if not isinstance(detail, dict) or not detail:
+                log(f"No details returned for empire {eid}")
+                failed += 1
+                time.sleep(throttle)
+                continue
+
+            if detail.get("empire") is not None:
+                detail = detail.get("empire") or {}
+
+            try:
+                key = int(eid)
+            except Exception:
+                key = str(eid)
+            empire_info[key] = detail
+            success += 1
+            cap = detail.get("capitalClaimName") or "(no capital)"
+            debug(f"Fetched ({idx}/{total}) {eid} -> capital: {cap}")
+            time.sleep(throttle)
+
+        debug(f"Finished fetching empire details: success={success}, failed={failed}")
+
     features = []
     if generator_core.HAS_SHAPELY:
         owner_polys, contested_polys = generator_core.build_owner_and_contested_polys(chunkmap, log)
         merged = generator_core.merge_owner_geometries(owner_polys, log)
         adjacency = generator_core.build_adjacency(merged, args, log)
         assigned = generator_core.greedy_coloring(adjacency, generator_core.COLOR_PALETTE, log, args.verbose, args.color_store)
-        features.extend(generator_core.emit_owner_features(merged, assigned))
+        features.extend(generator_core.emit_owner_features(merged, assigned, empire_info))
         if contested_polys:
             try:
                 merged_contested = generator_core.unary_union(contested_polys)

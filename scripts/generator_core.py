@@ -173,8 +173,27 @@ class BitJitaClient:
         except Exception:
             return []
 
+    def fetch_empire(self, empire_id: int) -> dict:
+        """Fetch detailed empire info from /api/empires/{id}.
 
-# delegate chunk/coords helpers to scripts/coords.py
+        Returns the inner empire object when the API returns a wrapper, or an
+        empty dict on error.
+        """
+        url = f"{BASE_URL}/api/empires/{empire_id}"
+        try:
+            response = _get_with_retries(self.session, url, self.limiter, headers={"User-Agent": self.user_agent})
+            if response is None:
+                return {}
+            data = response.json()
+            if isinstance(data, dict) and data.get("empire") is not None:
+                return data.get("empire") or {}
+            if isinstance(data, dict):
+                return data
+            return {}
+        except Exception:
+            return {}
+
+
 smallhex_to_chunk = _coords.smallhex_to_chunk
 chunk_bounds = _coords.chunk_bounds
 _coords_to_feature_polygon = _coords.coords_to_feature_polygon
@@ -241,11 +260,13 @@ def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: 
     def fetch_emp(emp: Tuple[int, str]):
         empire_id, empire_name = emp
         try:
-            log(f"Fetching towers for empire {empire_id} ({empire_name})")
+            if getattr(args, "verbose", False):
+                log(f"Fetching towers for empire {empire_id} ({empire_name})")
             fetch_start = time.perf_counter()
             towers = client.fetch_towers(empire_id)
             fetch_end = time.perf_counter()
-            log(f"Fetched {len(towers)} towers for {empire_id} in {fetch_end - fetch_start:.2f}s")
+            if getattr(args, "verbose", False):
+                log(f"Fetched {len(towers)} towers for {empire_id} in {fetch_end - fetch_start:.2f}s")
         except Exception as exc:
             log(f"Failed to fetch towers for {empire_id}: {exc}")
             towers = []
@@ -295,7 +316,11 @@ def process_empires_to_chunkmap(emps_to_process: List[Tuple[int, str]], client: 
         for cx, cy in sorted(set(local_chunks), key=lambda c: (c[0], c[1])):
             chunkmap[(cx, cy)].add((empire_id, empire_name))
         siege_points.extend(local_siege)
-        print(f"Processed empire {empire_id} ({empire_name}), towers handled: {towers_handled}")
+        if getattr(args, "verbose", False):
+            try:
+                log(f"Processed empire {empire_id} ({empire_name}), towers handled: {towers_handled}")
+            except Exception:
+                pass
 
     return chunkmap, siege_points
 
@@ -500,7 +525,7 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
     return assigned_color
 
 
-def emit_owner_features(merged_owner_geoms, assigned_color):
+def emit_owner_features(merged_owner_geoms, assigned_color, empire_info: dict | None = None):
     """マージ済みジオメトリと色割り当てから GeoJSON Feature を生成する。
 
     入力:
@@ -530,6 +555,37 @@ def emit_owner_features(merged_owner_geoms, assigned_color):
             continue
         empire_id, empire_name = owner_key
         color = assigned_color.get(owner_key, COLOR_PALETTE[empire_id % len(COLOR_PALETTE)])
-        props = {"popupText": empire_name, "color": color, "fillColor": color, "fillOpacity": OWNER_FILL_OPACITY}
+
+        popup = [empire_name, "", "", ""]
+        info = None
+        if empire_info is not None:
+            try:
+                info = empire_info.get(int(empire_id))
+            except Exception:
+                info = empire_info.get(str(empire_id))
+        if info and isinstance(info, dict) and info.get("empire") is not None:
+            info = info.get("empire")
+
+        if info:
+            cap_name = info.get("capitalClaimName")
+            cap_region = info.get("capitalRegionId")
+            if cap_name or cap_region is not None:
+                try:
+                    popup[2] = f"Capital : {cap_name} (R{cap_region})"
+                except Exception:
+                    popup[2] = ""
+            lx = info.get("locationX")
+            lz = info.get("locationZ")
+            try:
+                if lx is not None and lz is not None:
+                    e = round(float(lx) / 3.0)
+                    n = round(float(lz) / 3.0)
+                    popup[3] = f"Location : N {n} E {e}"
+            except Exception:
+                pass
+        else:
+            popup = [empire_name]
+
+        props = {"popupText": popup, "color": color, "fillColor": color, "fillOpacity": OWNER_FILL_OPACITY}
         features.append({"type": "Feature", "properties": props, "geometry": geom_json})
     return features
