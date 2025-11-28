@@ -470,7 +470,7 @@
   name: Tub City
   color: '#744d27ff'
 212837:
-  name: The Pits Are Broken
+  name: Accidental Hunting Nerfs
   color: '#8e8e8eff'
 224117:
   name: GUNMA
@@ -583,3 +583,12 @@
 1004115:
   name: Duckingham
   color: '#424242ff'
+21715:
+  name: The Squeakery
+  color: '#8a2d74ff'
+1024228:
+  name: Volkov Science Experiment
+  color: '#8a2d74ff'
+130986:
+  name: The Guild of Calamitous Intent
+  color: '#616161ff'

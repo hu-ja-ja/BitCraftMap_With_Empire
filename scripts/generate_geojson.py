@@ -234,7 +234,7 @@ def main() -> None:
         },
         "geometry": {
             "type": "Point",
-            "coordinates": [-10000, -10000]
+            "coordinates": [-5000, -5000]
         }
     }
     fc = {"type": "FeatureCollection", "features": [layer_off] + features}
