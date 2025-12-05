@@ -362,7 +362,7 @@
   name: Emberleaf Isles
   color: '#964c33ff'
 32223:
-  name: Tessathankful
+  name: Tessamerry
   color: '#744d27ff'
 32726:
   name: Ashforged Kinship
@@ -601,3 +601,12 @@
 1044177:
   name: The Bamboo Vault
   color: '#7038a8ff'
+1087141:
+  name: The Golden Sands
+  color: '#746027ff'
+1040419:
+  name: Ambrosia
+  color: '#7038a8ff'
+43982:
+  name: Imperial Senate
+  color: '#963333ff'
