@@ -225,10 +225,17 @@ def main() -> None:
         print("Warning: shapely not available — output will contain one polygon per chunk (no merging). Install shapely for merged polygons.")
         features.extend(generator_core.build_features_from_chunkmap(chunkmap))
 
+    last_update_str = time.strftime("%Y-%m-%dT%H:%MZ", time.gmtime())
     layer_off = {
         "type": "Feature",
         "properties": {
-            "popupText": ["Repository is here.", "https://github.com/hu-ja-ja/BitCraftMap_With_Empire"],
+            "popupText": [
+                "last update",
+                last_update_str,
+                "",
+                "Repository is here.",
+                "https://github.com/hu-ja-ja/BitCraftMap_With_Empire"
+            ],
             "iconName": "Hex_Logo",
             "turnLayerOff": ["ruinedLayer", "treesLayer", "templesLayer"]
         },
