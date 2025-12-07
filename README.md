@@ -59,7 +59,6 @@ uv run generate
 - `--rate-per-min` : レートリミッタの設定(分あたりの許可リクエスト数)
 - `--workers` : 並列ワーカ数(デフォルト 8)
 - `--verbose` : 進捗ログを詳細に出力
-- `--force-pairwise` : STRtree を無効化してペアワイズ判定に強制(デバッグ用)
 - `--color-store` : エンティティID -> 色マップを格納する YAML ファイルのパス(デフォルト: `Resource/color_map.yaml`)
 
 引数を指定した実行例 (uv 経由):

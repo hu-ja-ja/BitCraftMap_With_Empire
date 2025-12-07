@@ -47,7 +47,6 @@ def main() -> None:
     ap.add_argument("--rate-per-min", type=int, default=100, help="Allowed API requests per minute (token-bucket)")
     ap.add_argument("--workers", type=int, default=4, help="Number of threads to use for parallel tower fetching")
     ap.add_argument("--verbose", action="store_true", help="Enable verbose logging for debugging and progress")
-    ap.add_argument("--force-pairwise", action="store_true", help="Disable STRtree and force pairwise adjacency checks (debug)")
     ap.add_argument("--color-store", default="Resource/color_map.yaml", help="Path to YAML color store for entityId->color mapping")
     args = ap.parse_args()
 
@@ -209,8 +208,9 @@ def main() -> None:
     if generator_core.HAS_SHAPELY:
         owner_polys, contested_polys = generator_core.build_owner_and_contested_polys(chunkmap, log)
         merged = generator_core.merge_owner_geometries(owner_polys, log)
-        adjacency = generator_core.build_adjacency(merged, args, log)
-        assigned = generator_core.greedy_coloring(adjacency, generator_core.COLOR_PALETTE, log, args.verbose, args.color_store)
+        # adjacency = generator_core.build_adjacency(merged, args, log)
+        # assigned = generator_core.greedy_coloring(adjacency, generator_core.COLOR_PALETTE, log, args.verbose, args.color_store)
+        assigned = generator_core.apply_colors_from_store(merged.keys(), log, args.verbose, args.color_store)
         features.extend(generator_core.emit_owner_features(merged, assigned, empire_info, claims_map))
         if contested_polys:
             try:

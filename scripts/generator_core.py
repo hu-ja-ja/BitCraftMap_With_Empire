@@ -47,29 +47,16 @@ import requests
 try:
     from shapely.geometry import mapping as shapely_mapping
     from shapely.ops import unary_union
-    try:
-        from shapely.strtree import STRtree
-    except Exception:
-        STRtree = None
     HAS_SHAPELY = True
 except Exception:
     shapely_mapping = None
     unary_union = None
-    STRtree = None
     HAS_SHAPELY = False
 
 BASE_URL = "https://bitjita.com"
 DEFAULT_USER_AGENT = "Map_With_Empire (discord: hu_ja_ja_)"
 
-COLOR_PALETTE = [
-    "#FF5500ff",
-    "#AAFF00ff",
-    "#00FFAAff",
-    "#0088FFff",
-    "#6600FFff",
-    "#FF0099ff",
-]
-
+DEFAULT_EMPIRE_COLOR = "#FF5500ff"
 CONTESTED_COLOR = "#2d2d2d"
 CONTESTED_FILL_OPACITY = 0.5
 OWNER_FILL_OPACITY = 0.4
@@ -263,7 +250,7 @@ def build_features_from_chunkmap(chunkmap: Dict[Tuple[int, int], Set[Tuple[int, 
             props = {"popupText": f"Contested: {owner_names}", "color": CONTESTED_COLOR, "fillColor": CONTESTED_COLOR, "fillOpacity": CONTESTED_FILL_OPACITY}
         else:
             empire_id, empire_name = sorted(owners)[0]
-            color = COLOR_PALETTE[empire_id % len(COLOR_PALETTE)]
+            color = DEFAULT_EMPIRE_COLOR
             props = {"popupText": empire_name, "color": color, "fillColor": color, "fillOpacity": OWNER_FILL_OPACITY}
         feature = {"type": "Feature", "properties": props, "geometry": {"type": "Polygon", "coordinates": coords_list}}
         features.append(feature)
@@ -418,89 +405,11 @@ def merge_owner_geometries(owner_polys, log):
     return merged_owner_geoms
 
 
-def build_adjacency(merged_owner_geoms, args, log):
-    """マージ済みオーナー幾何を受け取り、隣接グラフを返す。
+def apply_colors_from_store(nodes, log, verbose: bool, color_store_path: str | None = None):
+    """YAMLストアから色を適用する。ストアにない場合はデフォルト色を使用する。
 
-    入力:
-      merged_owner_geoms: {(eid,name): shapely_geom}
-      args: CLI 引数（force_pairwise を参照）
-
-    出力:
-      adjacency: {node: set(neighbor_nodes)}
-
-    最適化:
-      - オブジェクト数が十分に多い（>50）の場合、STRtree を使って候補を検索する。
-      - STRtree の query 結果は環境によって型が異なる（geom オブジェクトや index など）ため
-        保守的にハンドリングしている。
-    """
-    nodes = sorted(list(merged_owner_geoms.keys()), key=lambda k: (k[0], k[1]))
-    adjacency: Dict[Tuple[int, str], Set[Tuple[int, str]]] = {n: set() for n in nodes}
-    log(f"Building adjacency graph for {len(nodes)} owner geometries...")
-    t_adj_start = time.perf_counter()
-
-    if STRtree is not None and len(nodes) > 50 and not getattr(args, "force_pairwise", False):
-        geom_list = [merged_owner_geoms[n] for n in nodes]
-        try:
-            tree = STRtree(geom_list)
-            geom_id_to_index = {id(g): idx for idx, g in enumerate(geom_list)}
-            for idx_i, geom_i in enumerate(geom_list):
-                owner_key = nodes[idx_i]
-                try:
-                    candidates = tree.query(geom_i)
-                except Exception:
-                    candidates = []
-                for candidate in candidates:
-                    idx_j = None
-                    if isinstance(candidate, int):
-                        idx_j = candidate
-                    else:
-                        idx_j = geom_id_to_index.get(id(candidate))
-                        if idx_j is None:
-                            try:
-                                idx_j = geom_list.index(candidate)
-                            except Exception:
-                                try:
-                                    idx_j = int(candidate)
-                                except Exception:
-                                    idx_j = None
-                    if idx_j is None or idx_j == idx_i:
-                        continue
-                    other = nodes[idx_j]
-                    try:
-                        if isinstance(candidate, int):
-                            candidate_geom = geom_list[idx_j]
-                        else:
-                            candidate_geom = candidate if hasattr(candidate, "geom_type") else geom_list[idx_j]
-                        if geom_i.intersects(candidate_geom) or geom_i.touches(candidate_geom):
-                            adjacency[owner_key].add(other)
-                            adjacency[other].add(owner_key)
-                    except Exception:
-                        continue
-        except Exception:
-            pass
-    else:
-        for idx_i, node_a in enumerate(nodes):
-            geom_a = merged_owner_geoms[node_a]
-            for node_b in nodes[idx_i + 1 :]:
-                geom_b = merged_owner_geoms[node_b]
-                try:
-                    if geom_a.intersects(geom_b) or geom_a.touches(geom_b):
-                        adjacency[node_a].add(node_b)
-                        adjacency[node_b].add(node_a)
-                except Exception:
-                    continue
-    t_adj_end = time.perf_counter()
-    edge_count = sum(len(s) for s in adjacency.values()) // 2
-    log(f"Adjacency graph built: nodes={len(nodes)}, edges={edge_count} (took {t_adj_end - t_adj_start:.2f}s)")
-    return adjacency
-
-
-def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: str | None = None):
-    """隣接グラフに対して貪欲着色を行い、色情報を `scripts.color_store` 経由で永続化する。
-
-    - 既存の色があればそれを優先して使う（上書きしない）。
-    - 毎回 `name` フィールドは更新する。
-    - `color_store_path` が指定されればロード/セーブを行う。
+    - 既存の色があればそれを優先して使う。
+    - ストアにない場合はデフォルト色(#FF5500ff)を使用し、ストアに保存する。
     """
     if color_store_path:
         try:
@@ -512,18 +421,11 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
     else:
         store = {}
 
-    nodes = list(adjacency.keys())
-    sorted_nodes = sorted(nodes, key=lambda n: len(adjacency[n]), reverse=True)
     assigned_color: Dict[Tuple[int, str], str] = {}
+    default_color = DEFAULT_EMPIRE_COLOR
+    store_updated = False
 
-    for eid, meta in list(store.items()):
-        if meta.get("color"):
-            pass
-
-    if verbose:
-        log(f"Coloring order (top 20): {sorted_nodes[:20]}")
-
-    for node_key in sorted_nodes:
+    for node_key in nodes:
         empire_id, empire_name = node_key
         try:
             eid_key = int(empire_id)
@@ -531,33 +433,34 @@ def greedy_coloring(adjacency, palette, log, verbose: bool, color_store_path: st
             eid_key = empire_id
 
         persisted = store.get(eid_key)
-        if persisted and persisted.get("color") is not None:
-            color_val = persisted.get("color")
-            if color_val:
-                assigned_color[node_key] = color_val
-            persisted["name"] = empire_name
+        color_val = persisted.get("color") if persisted else None
+        if color_val:
+            assigned_color[node_key] = color_val
+            # 名前情報の更新
+            if persisted and persisted.get("name") != empire_name:
+                persisted["name"] = empire_name
+                store_updated = True
             if verbose:
-                log(f"Reused stored color for {node_key}: {color_val}")
-            continue
-
-        used = {assigned_color[n] for n in adjacency[node_key] if n in assigned_color}
-        pick = next((c for c in palette if c not in used), palette[0])
-        assigned_color[node_key] = pick
-
-        existing = store.get(eid_key)
-        if existing is None:
-            store[eid_key] = {"name": empire_name, "color": pick}
+                log(f"Using stored color for {node_key}: {color_val}")
         else:
-            existing.setdefault("name", empire_name)
-            if not existing.get("color"):
-                existing["color"] = pick
-        if verbose:
-            log(f"Assigned color for {node_key}: {pick} (used around it: {used})")
+            # ストアにない、または色が未定義の場合
+            assigned_color[node_key] = default_color
+            if verbose:
+                log(f"Using default color for {node_key}: {default_color}")
 
-    if color_store_path:
+            # ストアに新規追加
+            if persisted is None:
+                store[eid_key] = {"name": empire_name, "color": default_color}
+                store_updated = True
+            elif not persisted.get("color"):
+                persisted["color"] = default_color
+                persisted["name"] = empire_name
+                store_updated = True
+
+    if color_store_path and store_updated:
         try:
             _color_store.save_color_store(color_store_path, store)
-            log(f"Saved color store to {color_store_path} ({len(store)} entries)")
+            log(f"Updated color store to {color_store_path} ({len(store)} entries)")
         except Exception as exc:
             log(f"Failed to save color store {color_store_path}: {exc}")
 
@@ -593,7 +496,7 @@ def emit_owner_features(merged_owner_geoms, assigned_color, empire_info: dict | 
         except Exception:
             continue
         empire_id, empire_name = owner_key
-        color = assigned_color.get(owner_key, COLOR_PALETTE[empire_id % len(COLOR_PALETTE)])
+        color = assigned_color.get(owner_key, DEFAULT_EMPIRE_COLOR)
 
         popup = [empire_name, "", "", "", ""]
         info = None
