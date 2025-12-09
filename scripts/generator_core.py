@@ -13,7 +13,7 @@
 - 永続化された色ストア（YAML）を用いた貪欲着色と GeoJSON 生成
 
 依存・前提:
-- Python 3.12+
+- Python 3.10+
 - `requests` — BitJita API 呼び出し
 - `pyyaml` — 色ストアの読み書き（`scripts/color_store.py` を使用）
 - `shapely` — ポリゴンのマージ・隣接判定（起動時に存在チェックを行います）
