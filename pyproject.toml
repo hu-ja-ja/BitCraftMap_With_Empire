@@ -6,10 +6,12 @@ dependencies = [
     "pyyaml>=6.0.3",
     "requests>=2.0",
     "shapely>=2.0",
+    "pyperclip>=1.8.2",
 ]
 
 [project.scripts]
 generate = "scripts.generate_geojson:main"
+color = "scripts.color_converter:main"
 
 [build-system]
 requires = ["hatchling"]

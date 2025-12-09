@@ -67,6 +67,16 @@ uv run generate
 uv run generate --limit-empires 100 --verbose --out Resource/my.geojson
 ```
 
+### 色変換ツール
+
+地図上の色コードを変換するための補助ツールです。
+
+```powershell
+uv run color
+```
+
+実行すると対話モードになり、Hexコードを入力すると変換後の値を表示し、クリップボードにコピーします。
+
 ## 出力について
 
 - 出力は GeoJSON の FeatureCollection です。BitCraftMap の[フォーマット](https://github.com/bitcraftmap/bitcraftmap?tab=readme-ov-file#feature--custom-markers) と互換性を保つプロパティを付与しています。
