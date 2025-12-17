@@ -2,13 +2,14 @@ name: Update Gist on GeoJSON change
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - 'Resource/*.geojson'
+      - "Resource/*.geojson"
 
 jobs:
   update-gist:
     runs-on: ubuntu-latest
+    timeout-minutes: 35
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,9 +19,31 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
+          python-version: "3.12"
+
+      - name: Check for default color in YAML
+        id: check_color
+        run: |
+          YAML_FILE="Resource/color_map.yaml"
+          DEFAULT_COLOR="#FF5500ff"
+
+          if [ ! -f "$YAML_FILE" ]; then
+            echo "Warning: $YAML_FILE not found. Skipping Gist update."
+            echo "skip=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          if grep -q "$DEFAULT_COLOR" "$YAML_FILE"; then
+            echo "Default color ($DEFAULT_COLOR) found in $YAML_FILE."
+            echo "Skipping Gist update."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "Default color not found. Proceeding with Gist update."
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Update Gist for changed GeoJSON files
+        if: steps.check_color.outputs.skip != 'true'
         env:
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
