@@ -5,9 +5,14 @@ on:
     branches: [main]
     paths:
       - "Resource/*.geojson"
+  workflow_run:
+    workflows: ["Daily Map Update"]
+    types:
+      - completed
 
 jobs:
   update-gist:
+    if: ${{ github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 35
     permissions:
@@ -17,6 +22,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -50,7 +56,7 @@ jobs:
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
           BEFORE: ${{ github.event.before }}
-          SHA: ${{ github.sha }}
+          SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
         run: |
           python - <<'PY'
           import os, subprocess, json, sys, urllib.request, glob
