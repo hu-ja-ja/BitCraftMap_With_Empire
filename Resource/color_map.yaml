@@ -599,7 +599,7 @@
   name: The Moves
   color: '#963333ff'
 1044177:
-  name: The Bamboo Vault
+  name: Everything
   color: '#7038a8ff'
 1087141:
   name: The Golden Sands
@@ -613,3 +613,6 @@
 1155395:
   name: Otakoi
   color: '#7038a8ff'
+782216:
+  name: The Clickarian Grand Initiative
+  color: '#98d9a8ff'
