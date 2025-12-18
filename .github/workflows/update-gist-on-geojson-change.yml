@@ -32,6 +32,9 @@ jobs:
       - name: Check for default color in YAML
         id: check_color
         run: |
+          # Ensure we are looking at the files from the checkout
+          ls -l Resource/
+          
           YAML_FILE="Resource/color_map.yaml"
           DEFAULT_COLOR="#FF5500ff"
 
@@ -71,11 +74,15 @@ jobs:
               sys.exit(1)
 
           changed = []
+          # For workflow_run, we always want to update all files because we know they were just generated
+          is_workflow_run = os.environ.get('GITHUB_EVENT_NAME') == 'workflow_run'
+          
           try:
-              if before and not set(before) <= set('0'):
+              if not is_workflow_run and before and not set(before) <= set('0'):
                   out = subprocess.check_output(['git','diff','--name-only', before, sha, '--', 'Resource/*.geojson'], stderr=subprocess.DEVNULL).decode().splitlines()
                   changed = [p.strip() for p in out if p.strip()]
               else:
+                  # Fallback or workflow_run: check all files
                   changed = glob.glob('Resource/*.geojson')
           except subprocess.CalledProcessError:
               changed = []
