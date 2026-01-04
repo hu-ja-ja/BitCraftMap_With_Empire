@@ -110,7 +110,7 @@
   name: ZYNBABWE
   color: '#eebaffff'
 5716:
-  name: Ancient Greece
+  name: Meow
   color: '#2c5885ff'
 5782:
   name: Holy Bunbun Empire
@@ -137,7 +137,7 @@
   name: Lich Core Dominion
   color: '#7f7f7fff'
 8072:
-  name: The United Season of Benevolence
+  name: The United States of Bitnumenor
   color: '#963333ff'
 8234:
   name: The Abyss
@@ -257,7 +257,7 @@
   name: Empyrelite
   color: '#94d4d4ff'
 16578:
-  name: Ithacan Grinchocracy
+  name: Ithacan Papacy
   color: '#7038a8ff'
 16869:
   name: Bloodbourne Reach
@@ -648,4 +648,10 @@
   color: '#FF5500ff'
 23896:
   name: Azoria
+  color: '#FF5500ff'
+1560:
+  name: Tortuga
+  color: '#FF5500ff'
+1183529:
+  name: Bunny Grove
   color: '#FF5500ff'
