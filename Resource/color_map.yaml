@@ -158,7 +158,7 @@
   name: Dreamless
   color: '#7f7f7fff'
 9175:
-  name: The Coven
+  name: The Fae Realm
   color: '#6241c4ff'
 9655:
   name: Vodowls
@@ -657,4 +657,10 @@
   color: '#FF5500ff'
 478706:
   name: lakeside
+  color: '#FF5500ff'
+1598781:
+  name: L C Nation
+  color: '#FF5500ff'
+109834:
+  name: The Blue Angels
   color: '#FF5500ff'
