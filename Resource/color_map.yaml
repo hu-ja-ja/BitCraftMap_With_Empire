@@ -80,7 +80,7 @@
   name: The Hempire
   color: '#206320ff'
 3973:
-  name: dumbbitch cult
+  name: Church of Ore
   color: '#746027ff'
 4174:
   name: Gallifrey Emporium
@@ -664,3 +664,9 @@
 109834:
   name: The Blue Angels
   color: '#1f4e5eff'
+1529829:
+  name: The Adventurers Guild
+  color: '#FF5500ff'
+1735094:
+  name: Murchet
+  color: '#FF5500ff'
