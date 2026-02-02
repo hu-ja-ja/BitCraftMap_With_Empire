@@ -670,9 +670,12 @@
 1735094:
   name: Murchet
   color: '#1f5e5eff'
-1828402:
-  name: Ithacan Remanency
-  color: '#FF5500ff'
 1874440:
   name: Otherworld
-  color: '#FF5500ff'
+  color: '#913048ff'
+1065523:
+  name: Asphodel
+  color: '#7f7f7fff'
+1828402:
+  name: Remanence
+  color: '#7f7f7fff'
