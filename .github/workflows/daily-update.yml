@@ -2,7 +2,7 @@ name: Daily Map Update
 
 on:
     schedule:
-        - cron: "0 3 * * *" # 12:00 JST (03:00 UTC)
+        - cron: "0 2 * * *" # 12:00 JST (03:00 UTC)
     workflow_dispatch: # Allow manual trigger for testing
 
 jobs:
