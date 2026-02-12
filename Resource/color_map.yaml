@@ -224,7 +224,7 @@
   name: Dreadmark Empire
   color: '#7f7f7fff'
 13285:
-  name: Freakyborea RU
+  name: Burning World
   color: '#2c4285ff'
 13438:
   name: KOTONOE Shrine
@@ -681,4 +681,13 @@
   color: '#7f7f7fff'
 1977554:
   name: RIP High Diplomacy
+  color: '#FF5500ff'
+2395:
+  name: Talzarian Empire
+  color: '#FF5500ff'
+2027868:
+  name: Black Flag
+  color: '#FF5500ff'
+2004513:
+  name: The Shifter Realm
   color: '#FF5500ff'
